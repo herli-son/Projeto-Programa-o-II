@@ -45,10 +45,12 @@ public class Acoes {
 
     private static void CadastrarPessoa() {
         Entidades.Pessoa pessoa = new Entidades.Pessoa();
+        
         pessoa.acesso = "_______________";
         pessoa.nome = "_______________";
         pessoa.sobrenome = "_______________";
         pessoa.senha = "_______________";
+        
         pessoa.acesso = Painel.Entrada(Menu.DadosCadastroPessoa(pessoa) + "\nDigite o  acesso: ");
         if (pessoa.acesso == null) {
             return;

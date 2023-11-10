@@ -12,6 +12,13 @@ public class ToEntity {
 		pessoa.nome = array[1];
 		pessoa.sobrenome = array[2];
 		pessoa.senha = array[3];
+                pessoa.estabelecimentosVinculados = array[4];
+                pessoa.servicosReservados = array[5];
+                pessoa.produtosReservados = array[6];
+                pessoa.funcionariosAvaliados = array[7];
+                pessoa.estabelecimentosAvaliados = array[8];
+                pessoa.produtosAvaliados = array[9];
+                pessoa.produtosAvaliados = array[10];
 		return pessoa;
 	}
 }

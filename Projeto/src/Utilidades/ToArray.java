@@ -11,7 +11,14 @@ public class ToArray {
 				pessoa.acesso,
 				pessoa.nome,
 				pessoa.sobrenome,
-				pessoa.senha
+				pessoa.senha,
+                                pessoa.estabelecimentosVinculados, 
+                                pessoa.servicosReservados,
+                                pessoa.produtosReservados,
+                                pessoa.funcionariosAvaliados,
+                                pessoa.estabelecimentosAvaliados,
+                                pessoa.produtosAvaliados,
+                                pessoa.produtosAvaliados
 		};
 	}
 }

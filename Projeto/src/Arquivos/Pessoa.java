@@ -34,7 +34,7 @@ public class Pessoa {
 	 * @throws FileNotFoundException A pessoa não foi encontrada
 	 */
 	public static Entidades.Pessoa Ler(String acesso) throws FileNotFoundException, IOException{
-		String[] dados = Arquivo.Ler(arquivo(acesso), Globais.PESSOAS);
+		String[] dados = Arquivo.Ler(arquivo(acesso), Globais.CAMPOSPESSOAS);
 		return ToEntity.Pessoa(dados);
 	}
 	/**

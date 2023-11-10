@@ -39,8 +39,8 @@ public class Arquivo {
 	public static void Atualizar(String path, String[] linhas) throws FileNotFoundException {
         PrintWriter pw = new PrintWriter(path);
         for (String linha : linhas) {
-        	pw.println(linha);
-		}
+        	pw.println(linha == null ? "" : linha);
+	}
         pw.flush();
         pw.close();
     }
