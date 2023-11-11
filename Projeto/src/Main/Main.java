@@ -1,15 +1,22 @@
 package Main;
 
 import Apresentacao.Acoes;
-import Servicos.Diretorio;
+import Arquivos.Diretorio;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author herli
  */
 public class Main {
+
     public static void main(String[] args) {
-    	Diretorio.CriarDiretorios();
-        Acoes.Acesso();
+        try {
+            Diretorio.CriarDiretorios();
+            Acoes.Acesso();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getStackTrace());
+        }
     }
 }

@@ -25,6 +25,15 @@ public class Painel {
         return op == JOptionPane.YES_OPTION;
     }
     /**
+     * Painel com opção de sim, não, cancelar
+     * @param mensagem - Mensagem que será exibida
+     * @param titulo - Ação que está sendo feita
+     * @return 0 - Sim <br> 1 - Não <br> 2 - Cancelar
+     */
+    public static int SimOuNaoOuCancelar(String mensagem, String titulo) {
+        return JOptionPane.showConfirmDialog(null, mensagem, titulo, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+    }
+    /**
      * Painel padrão de entrada de dados
      * @param mensagem - Dados que está sendo entrado
      * @return Dado informado
@@ -59,13 +68,23 @@ public class Painel {
     }
     /**
      * Painel de mostrar um item de uma lista contendo as opções anterior e próximo
-     * @param dados - Dado que está sendo exibido
+     * @param informacao - Dado que está sendo exibido
      * @param titulo - O que está sendo exibido
      * @return 0 - Anterior <br> 1 - Sair <br> 2 - Próximo
      */
-    public static int DadosLista(String dados, String titulo) {
+    public static int DadosLista(String informacao, String titulo) {
         Object[] options = {"Anterior", "Sair", "Próximo"};
-        return JOptionPane.showOptionDialog(null, dados, titulo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+        return JOptionPane.showOptionDialog(null, informacao, titulo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+    }
+    /**
+     * Painel de mostrar um item de uma lista contendo as opções anterior, próximo e alterar
+     * @param informacao - Dado que está sendo exibido
+     * @param titulo - O que está sendo exibido
+     * @return 0 - Anterior <br> 1 - Sair <br> 2 - ALterar <br> 3 - Próximo
+     */
+    public static int DadosListaAlterar(String informacao, String titulo) {
+        Object[] options = {"Anterior", "Sair", "Alterar", "Próximo"};
+        return JOptionPane.showOptionDialog(null, informacao, titulo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
     }
     /**
      * Painel de escolha de item em comobox para escolhas unicas
@@ -77,5 +96,42 @@ public class Painel {
 
         Object valor = JOptionPane.showInputDialog(null, mensagem, "Escolha:", JOptionPane.PLAIN_MESSAGE, null, dados, dados[0]);
         return valor != null ? String.valueOf(valor) : null;
+    }
+    /**
+     * Mostra informação a respeito dos dados de uma entidade passada
+     * @param dados - Entidade formatada en array
+     * @param tipo - Tipo da entidade
+     * @return Opção escolhida <br>
+     * 0 - Anterior <br> 1 - Sair <br> 2 - Próximo
+     * @throws Exception Existem dados demais ou dados insuficientes para mostrar
+     */
+    public static int VerDadoLista(String[] dados, String tipo) throws Exception{
+        String mensagem = "";
+        int op;
+        
+        switch (tipo) {
+            case "Pessoa":
+                    mensagem = Servicos.Pessoa.MontaDadosInfo(dados);
+                break;
+        }
+         return DadosLista(mensagem, tipo);      
+    }
+    /**
+     * Mostra informação a respeito dos dados de uma entidade passada com possibilidade de alteração
+     * @param dados - Entidade formatada en array
+     * @param tipo - Tipo da entidade
+     * @return Opção escolhida <br>
+     * 0 - Anterior <br> 1 - Sair <br> 2 - ALterar <br> 3 - Próximo
+     * @throws Exception Existem dados demais ou dados insuficientes para mostrar
+     */
+    public static int AlterarDadoLista(String[] dados, String tipo) throws Exception{
+        String mensagem = "";
+        
+        switch (tipo) {
+            case "Pessoa":
+                    mensagem = Servicos.Pessoa.MontaDadosInfo(dados);
+                break;
+        }
+         return DadosListaAlterar(mensagem, tipo);      
     }
 }

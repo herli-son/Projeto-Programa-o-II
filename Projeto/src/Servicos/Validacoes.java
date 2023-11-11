@@ -1,18 +1,9 @@
 package Servicos;
 
 import Apresentacao.Painel;
-import Arquivos.Pessoa;
 import Utilidades.Globais;
 
 public class Validacoes {
-	/**
-	 * Caracteres válidos para cadastrar
-	 */
-	private static final char[] CARACTERESVALIDOS = {
-			'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-			'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-			'0','1','2','3','4','5','6','7','8','9'
-		};
 	/**
 	 * Verifica se o valor passado existe no array
 	 * @param array - Lista de valores
@@ -84,11 +75,11 @@ public class Validacoes {
 	 */
 	private static boolean TemEspecial(String texto) {
 		
-		for (int i = 0; i < texto.length(); i++) {
-			if(!InArray(CARACTERESVALIDOS, texto.charAt(i))) {
-				return true;
-			}
-		}
-		return false;
+            for (int i = 0; i < texto.length(); i++) {
+                    if(!InArray( Globais.CARACTERESVALIDOS, texto.charAt(i))) {
+                            return true;
+                    }
+            }
+            return false;
 	}
 }

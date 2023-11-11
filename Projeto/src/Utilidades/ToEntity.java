@@ -18,7 +18,7 @@ public class ToEntity {
                 pessoa.funcionariosAvaliados = array[7];
                 pessoa.estabelecimentosAvaliados = array[8];
                 pessoa.produtosAvaliados = array[9];
-                pessoa.produtosAvaliados = array[10];
+                pessoa.servicosAvaliados = array[10];
 		return pessoa;
 	}
 }

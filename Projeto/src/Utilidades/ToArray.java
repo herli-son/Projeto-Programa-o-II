@@ -18,7 +18,25 @@ public class ToArray {
                                 pessoa.funcionariosAvaliados,
                                 pessoa.estabelecimentosAvaliados,
                                 pessoa.produtosAvaliados,
-                                pessoa.produtosAvaliados
+                                pessoa.servicosAvaliados
 		};
 	}
+        public static String[] DadosPessoa(Entidades.Pessoa pessoa) {
+		return new String[] {
+				pessoa.acesso,
+				pessoa.nome,
+				pessoa.sobrenome,
+				pessoa.senha,
+                };
+	}
+        /**
+         * Transforma lista de string em array
+         * @param lista - Lista de string corrente com itens separados por ,
+         * @return Array de string com itens da lista
+         */
+        public static String[] Lista(String lista){
+            if(lista.equals("")) 
+                return new String[0];
+            return lista.split(",");
+        }
 }

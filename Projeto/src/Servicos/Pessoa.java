@@ -1,9 +1,9 @@
-package Arquivos;
+package Servicos;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import Servicos.Arquivo;
-import Servicos.Diretorio;
+import Arquivos.Arquivo;
+import Arquivos.Diretorio;
 import Utilidades.Globais;
 import Utilidades.ToArray;
 import Utilidades.ToEntity;
@@ -34,7 +34,7 @@ public class Pessoa {
 	 * @throws FileNotFoundException A pessoa não foi encontrada
 	 */
 	public static Entidades.Pessoa Ler(String acesso) throws FileNotFoundException, IOException{
-		String[] dados = Arquivo.Ler(arquivo(acesso), Globais.CAMPOSPESSOAS);
+		String[] dados = Arquivo.Ler(arquivo(acesso), Globais.QTDCAMPOSPESSOAS);
 		return ToEntity.Pessoa(dados);
 	}
 	/**
@@ -52,4 +52,25 @@ public class Pessoa {
 	public static void Deletar(Entidades.Pessoa pessoa) {
 		Arquivo.Deletar(arquivo(pessoa.acesso));
 	}
+        /**
+         * Retorna os campos da pessoa em uma lista com as informações passadas no Array
+         * @param dados - Array com informações da pessoa montado usando o Utilidades.ToArray
+         * @return Texto formatado com as informações da pessoa
+         * @throws Exception As informações do Array passado foram insufucientes ou mais do que suficientes
+         */
+        public static String MontaDadosInfo(String[] dados) throws Exception{
+            
+            String info = "";
+            
+            if(dados.length < Globais.CAMPOSINFOPESSOAS.length)
+                throw new Exception("A quantidade de campos informada está insuficiente!");
+            
+            if(dados.length > Globais.CAMPOSINFOPESSOAS.length)
+                throw new Exception("A quantidade de campos informada está extrapolada!");
+            
+            for (int i = 0; i < dados.length; i++) {
+                info += Globais.CAMPOSINFOPESSOAS[i] + ": " + dados[i] + "\n";
+            }
+            return info;
+        }
 }

@@ -1,8 +1,5 @@
 package Apresentacao;
 
-import Entidades.Pessoa;
-import javax.swing.JOptionPane;
-
 public class Menu {
 
     /**
@@ -10,7 +7,7 @@ public class Menu {
      */
     public static final String[] INICIO = {"1 - Acessar", "2 - Cadastrar", "3 - Encerrar"};
     /**
-     * MEnu para pessoa logada
+     * Menu para pessoa logada
      */
     public static final String[] PESSOA = {
         "1 - Meus dados",
@@ -33,6 +30,24 @@ public class Menu {
             "5 - Salvar",
             "6 - Cancelar"};
     }
+    /**
+     * Menu de avaliações para visualizar
+     */
+    public static final String[] AVALIACOES = {
+        "1 - Funcionarios",
+        "2 - Estabelecimentos",
+        "3 - Produtos",
+        "4 - Serviços",
+        "5 - Voltar"
+    };
+    /**
+     * Menu de compras feitas
+     */
+    public static final String[] COMPRAS = {
+        "1 - Produtos",
+        "2 - Serviços",
+        "3 - Voltar"
+    };
 
     /**
      * Mostrar menu com dados de acesso passados
@@ -51,17 +66,16 @@ public class Menu {
     /**
      * Mostrar menu com os dados passados durante o cadastro
      *
-     * @param acesso - Acesso da pessoa
-     * @param nome - Nome da pessoa
-     * @param sobrenome - Sobrenome da pessoa
-     * @param senha - Senha da pessoa
+     * @param pessoa - Dados da pessoa
      * @return Menu com todas as informações
      */
     public static String DadosCadastroPessoa(Entidades.Pessoa pessoa) {
-        String menu = "Acesso: " + pessoa.acesso + "\n"
-                + "Nome: " + pessoa.nome + "\n"
-                + "Sobrenome: " + pessoa.sobrenome + "\n"
-                + "Senha: " + pessoa.senha;
+        String menu = "";
+        try {
+            menu = Servicos.Pessoa.MontaDadosInfo(Utilidades.ToArray.DadosPessoa(pessoa));
+        } catch (Exception e) {
+            Painel.Erro(e.getMessage());
+        }
         return menu;
     }
 }
