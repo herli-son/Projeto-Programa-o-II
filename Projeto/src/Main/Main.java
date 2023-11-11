@@ -1,6 +1,7 @@
 package Main;
 
 import Apresentacao.Acoes;
+import Apresentacao.Painel;
 import Arquivos.Diretorio;
 import javax.swing.JOptionPane;
 

@@ -39,4 +39,26 @@ public class ToArray {
                 return new String[0];
             return lista.split(",");
         }
+        /**
+         * Concatena dois arrays de strings
+         * @param p - Primeiro array
+         * @param s - Segundo array
+         * @return Arrays concatenados
+         */
+        public static String[] Concatena(String[] p, String[] s){
+            String[] concat = new String[p.length + s.length];
+            int index = 0;
+            
+            for (String value : p) {
+                concat[index] = value;
+                index++;
+            }
+            
+            for (String value : s) {
+                concat[index] = value;
+                index++;
+            }
+            
+            return concat;
+        }
 }

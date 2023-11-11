@@ -105,13 +105,13 @@ public class Painel {
      * 0 - Anterior <br> 1 - Sair <br> 2 - Próximo
      * @throws Exception Existem dados demais ou dados insuficientes para mostrar
      */
-    public static int VerDadoLista(String[] dados, String tipo) throws Exception{
+    public static int VerDadoLista(String[] dado, String tipo) throws Exception{
         String mensagem = "";
         int op;
         
         switch (tipo) {
             case "Pessoa":
-                    mensagem = Servicos.Pessoa.MontaDadosInfo(dados);
+                    mensagem = Servicos.Pessoa.MontaDadosInfo(dado);
                 break;
         }
          return DadosLista(mensagem, tipo);      
@@ -124,14 +124,25 @@ public class Painel {
      * 0 - Anterior <br> 1 - Sair <br> 2 - ALterar <br> 3 - Próximo
      * @throws Exception Existem dados demais ou dados insuficientes para mostrar
      */
-    public static int AlterarDadoLista(String[] dados, String tipo) throws Exception{
+    public static int AlterarDadoLista(String[] dado, String tipo) throws Exception{
         String mensagem = "";
         
         switch (tipo) {
             case "Pessoa":
-                    mensagem = Servicos.Pessoa.MontaDadosInfo(dados);
+                    mensagem = Servicos.Pessoa.MontaDadosInfo(dado);
                 break;
         }
          return DadosListaAlterar(mensagem, tipo);      
+    }
+    /**
+     * Escolher uma opção de uma lista de opções
+     * @param dados - Opções a escolher
+     * @return Opção escolhida
+     */
+    public static String EscolherDadoLista(String[] dados){
+        
+        String[] opcao = Utilidades.ToArray.Concatena(new String[] {"Adicionar"}, dados);
+        Object o = JOptionPane.showInputDialog(null, "Selecione para visualizar: ", "Lista", JOptionPane.PLAIN_MESSAGE, null, opcao, opcao[0]);
+        return o.toString();
     }
 }
