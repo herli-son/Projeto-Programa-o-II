@@ -63,10 +63,6 @@ public class Pessoa {
         pessoa.sobrenome = "_______________";
         pessoa.senha = "_______________";
 
-        pessoa.acesso = Painel.Entrada(Menu.DadosCadastroPessoa(pessoa) + "\nDigite o  acesso: ");
-        if (pessoa.acesso == null) {
-            return;
-        }
         pessoa.nome = Painel.Entrada(Menu.DadosCadastroPessoa(pessoa) + "\nDigite o  nome: ");
         if (pessoa.nome == null) {
             return;
@@ -74,6 +70,10 @@ public class Pessoa {
         pessoa.sobrenome = Painel.Entrada(Menu.DadosCadastroPessoa(pessoa) + "\nDigite o  sobrenome: ");
         if (pessoa.sobrenome == null) {
             return;
+        }
+        pessoa.acesso = Painel.Entrada(Menu.DadosCadastroPessoa(pessoa) + "\nDigite o  acesso: ");
+        if (pessoa.acesso == null) {
+        	return;
         }
         pessoa.senha = Painel.Entrada(Menu.DadosCadastroPessoa(pessoa) + "\nDigite a senha: ");
         if (pessoa.senha == null) {
