@@ -5,15 +5,6 @@ package Utilidades;
  * @author herli
  */
 public class Globais {
-
-    /**
-     * Quantidade de campos da entidade pessoa
-     */
-    public static final int QTDCAMPOSPESSOAS = 11;
-    /**
-     * Campos que contém as informações de uma pessoa
-     */
-    public static final String[] CAMPOSINFOPESSOAS = { "Nome", "Sobrenome", "Acesso", "Senha"};
     /**
      * Pessoa que realizou login
      */

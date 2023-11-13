@@ -2,80 +2,81 @@ package Apresentacao;
 
 public class Menu {
 
-    /**
-     * Tela inicial
-     */
-    public static final String[] INICIO = {"1 - Acessar", "2 - Cadastrar", "3 - Encerrar"};
-    /**
-     * Menu para pessoa logada
-     */
-    public static final String[] PESSOA = {
-        "1 - Meus dados",
-        "2 - Minhas avaliações",
-        "3 - Minhas compras",
-        "4 - Meus estabelecimentos",
-        "5 - Estabelecimentos",
-        "6 - Sair"
-    };
+	/**
+	 * Tela inicial
+	 */
+	public static final String[] INICIO = { "1 - Acessar", "2 - Cadastrar", "3 - Encerrar" };
+	/**
+	 * Menu para pessoa logada
+	 */
+	public static final String[] PESSOA = { "1 - Meus dados", "2 - Minhas avaliações", "3 - Minhas compras",
+			"4 - Meus estabelecimentos", "5 - Estabelecimentos", "6 - Sair" };
+	/**
+	 * Menu de avaliações para visualizar
+	 */
+	public static final String[] AVALIACOES = { "1 - Funcionarios", "2 - Estabelecimentos", "3 - Produtos",
+			"4 - Serviços", "5 - Voltar" };
+	/**
+	 * Menu de compras feitas
+	 */
+	public static final String[] COMPRAS = { "1 - Produtos", "2 - Serviços", "3 - Voltar" };
 
-    /**
-     * Menu para alterar dados de uma pessoa
-     */
-    public static String[] AlterarPessoa(Entidades.Pessoa pessoa) {
-        return new String[]{
-            "1 - Acesso: " + pessoa.acesso,
-            "2 - Nome: " + pessoa.nome,
-            "3 - Sobrenome: " + pessoa.sobrenome,
-            "4 - Senha: " + pessoa.senha,
-            "5 - Salvar",
-            "6 - Cancelar"};
-    }
-    /**
-     * Menu de avaliações para visualizar
-     */
-    public static final String[] AVALIACOES = {
-        "1 - Funcionarios",
-        "2 - Estabelecimentos",
-        "3 - Produtos",
-        "4 - Serviços",
-        "5 - Voltar"
-    };
-    /**
-     * Menu de compras feitas
-     */
-    public static final String[] COMPRAS = {
-        "1 - Produtos",
-        "2 - Serviços",
-        "3 - Voltar"
-    };
+	/**
+	 * Dados específicos de uma entidade passada
+	 * 
+	 * @param infoEntidade  - Campos disponíveis para entidade disponível em
+	 *                      Globlais (INFO)
+	 * @param dadosEntidade - Dados atuais da entidade passada
+	 * @param campos        - Campos que serão retornados na visualização
+	 * @return Texto contendo os dados da entidade com os campos passados
+	 * @throws Exception Os dados informados não estão na mesma quatidade dos campos
+	 *                   info da entidade <br>
+	 *                   O index do campo não existe
+	 */
+	public static String TextoDadosEntidade(String[] infoEntidade, String[] dadosEntidade, int[] campos)
+			throws Exception {
+		if (infoEntidade.length != dadosEntidade.length)
+			throw new Exception("Os dados informados não são suficientes para essa entidade!\nCampos necessários: "
+					+ infoEntidade.length + "\nCampos passados: " + dadosEntidade.length);
+		String dados = "";
+		for (int i : campos) {
+			if (i < 0 || i > infoEntidade.length - 1)
+				throw new Exception("O index do campo passado não existe. Campo: " + 1);
+			dados += infoEntidade[i] + ": " + dadosEntidade[i] + "\n";
+		}
+		return dados;
+	}
 
-    /**
-     * Mostrar menu com dados de acesso passados
-     *
-     * @param acesso - Acesso da pessoa
-     * @param senha - Senha da pessoa
-     * @return Menu com todas as informações
-     * @throws Exception
-     */
-    public static String DadosAcessoPessoa(String acesso, String senha) {
-        String menu = "Acesso: " + acesso + "\n"
-                + "Senha: " + senha;
-        return menu;
-    }
+	/**
+	 * Monta array de opções disponíveis com valor atual
+	 * 
+	 * @param descricaoOpcoes - Array de opções a serem escolhidas
+	 * @return Array montado com as opções
+	 * @throws Exception não acontece
+	 */
+	public static String[] MontaMenuOpcoes(String[] descricaoOpcoes) throws Exception {
+		return MontaMenuOpcoes(descricaoOpcoes, new String[0]);
+	}
 
-    /**
-     * Mostrar menu com os dados passados durante o cadastro
-     *
-     * @param pessoa - Dados da pessoa
-     * @return Menu com todas as informações
-     */
-    public static String DadosCadastroPessoa(Entidades.Pessoa pessoa) {
-        String menu = "";
-        try {
-            menu = Servicos.Pessoa.MontaDadosInfo(Utilidades.ToArray.DadosPessoa(pessoa));
-        } catch (Exception e) {
-            Painel.Erro(e.getMessage());
-        }
-        return menu;
-    }
+	/**
+	 * Monta array de opções disponíveis com valor atual
+	 * 
+	 * @param descricaoOpcoes - Array de opções a serem escolhidas
+	 * @param valores         - Valores que as opções possuem
+	 * @return Array montado com as opções e os valores
+	 * @throws Exception A quantidade de valores informados é maior que a quantidade
+	 *                   de opções
+	 */
+	public static String[] MontaMenuOpcoes(String[] descricaoOpcoes, String[] valores) throws Exception {
+		String[] opcoes = new String[descricaoOpcoes.length];
+		int i;
+		if (valores.length > opcoes.length)
+			throw new Exception("Existem mais valores informados que opções disponíveis. \n Valores: " + valores.length
+					+ "\nOpções: " + opcoes.length);
+		for (i = 0; i < valores.length; i++)
+			opcoes[i] = (i + 1) + " - " + descricaoOpcoes[i] + ": " + valores[i] + "\n";
+		for (int j = i; j < opcoes.length; j++)
+			opcoes[j] = (j + 1) + " - " + descricaoOpcoes[j] + "\n";
+		return opcoes;
+	}
 }
