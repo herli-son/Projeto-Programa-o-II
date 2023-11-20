@@ -9,6 +9,8 @@ public class Globais {
      * Pessoa que realizou login
      */
     public static Entidades.Pessoa PessoaLogada;
+    
+    public static Entidades.Estabelecimento EstabelecimentoLogado;
     /**
     * Caracteres válidos para cadastrar
     */

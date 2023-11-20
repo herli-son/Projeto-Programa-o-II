@@ -48,4 +48,38 @@ public class ToEntity {
 		}
 		return pessoa;
 	}
+
+	public static Entidades.Estabelecimento Estabelecimento(String[] array) {
+		String[] info = { array[0], array[1], array[2], array[3], array[4] };
+		return Estabelecimento(info, array);
+	}
+
+	public static Entidades.Estabelecimento Estabelecimento(String[] info, String[] array) {
+		Entidades.Estabelecimento estabelecimento = new Entidades.Estabelecimento();
+
+		estabelecimento.nome = info[0];
+		estabelecimento.cnpj = info[1];
+		estabelecimento.descricao = info[2];
+		estabelecimento.abertura = info[3];
+		estabelecimento.fechamento = info[4];
+
+		if (array.length == 5) {
+			estabelecimento.funcoes = "";
+			estabelecimento.avaliacoes = "";
+			estabelecimento.servicos = "";
+			estabelecimento.produtos = "";
+			estabelecimento.funcionarios = "";
+			estabelecimento.servicosReservados = "";
+			estabelecimento.produtosReservados = "";
+		} else {
+			estabelecimento.funcoes = array[5];
+			estabelecimento.avaliacoes = array[6];
+			estabelecimento.servicos = array[7];
+			estabelecimento.produtos = array[8];
+			estabelecimento.funcionarios = array[9];
+			estabelecimento.servicosReservados = array[10];
+			estabelecimento.produtosReservados = array[11];
+		}
+		return estabelecimento;
+	}
 }

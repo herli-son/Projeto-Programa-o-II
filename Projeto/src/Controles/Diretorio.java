@@ -32,4 +32,19 @@ public class Diretorio {
 	public static String Pessoas() {
 		return DIRETORIOS[1];
 	}
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+	
+	/**
+	 * Obtem o diretório que os estabelecimentos serão salvos
+	 * 
+	 * @return Diretório da entidade estabelecimento
+	 */
+	public static String Estabelecimento() {
+		return DIRETORIOS[2];
+	}
+=======
+>>>>>>> e333595d01ec86a72a570431dcbd688c5b77b728
+>>>>>>> Stashed changes
 }

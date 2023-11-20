@@ -30,8 +30,17 @@ public class Pessoa {
 					Painel.Informar("Em Desenvolvimento");
 					break;
 				case "4":
+<<<<<<< Updated upstream
 					// Lista de estabelecimentos vinculados à pessoa
 					Painel.Informar("Em Desenvolvimento");
+=======
+<<<<<<< HEAD
+					MeusEstabelecimentos();
+=======
+					// Lista de estabelecimentos vinculados à pessoa
+					Painel.Informar("Em Desenvolvimento");
+>>>>>>> e333595d01ec86a72a570431dcbd688c5b77b728
+>>>>>>> Stashed changes
 					break;
 				case "5":
 					Painel.Informar("Em Desenvolvimento");
@@ -85,4 +94,15 @@ public class Pessoa {
 		Servicos.Pessoa.Atualizar(pessoaEntidade);
 		Globais.PessoaLogada = Copiar.Pessoa(pessoaEntidade);
 	}
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+	
+	private static void MeusEstabelecimentos() throws Exception {
+		String[] IDs = ToArray.Lista(Globais.PessoaLogada.estabelecimentosVinculados);
+		Estabelecimento.Lista(IDs);
+	}
+=======
+>>>>>>> e333595d01ec86a72a570431dcbd688c5b77b728
+>>>>>>> Stashed changes
 }

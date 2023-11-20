@@ -69,6 +69,35 @@ public class Validacoes {
 		return true;
 	}
 	/**
+	 * Verifica se pode acessar o estabelecimento
+	 * @param cnpj - acesso do estabelecimento
+	 * @return Se o estabelecimento existe ou não
+	 */
+	public static boolean AcessoEstabelecimento(String cnpj) {
+		try {
+			Entidades.Estabelecimento estabelecimento = Servicos.Estabelecimento.Ler(cnpj);
+			Globais.EstabelecimentoLogado = estabelecimento;
+			return true;
+		} catch(Exception e) {
+			Painel.Erro("Não existe estabelecimento com esse CNPJ");
+			return false;
+		}
+	}
+	
+	public static boolean CadastroEstabelecimento(Entidades.Estabelecimento estabelecimento) {
+		
+		if(TemEspecial(estabelecimento.cnpj)) {
+			Painel.Erro("O CNPJ não deve ter caracteres especiais!");
+			return false;
+		}
+		try {
+			Estabelecimento.Ler(estabelecimento.cnpj);
+			Painel.Erro("Já existe um estabelecimento com esse CNPJ" + estabelecimento.cnpj);
+			return false;
+		} catch (Exception e) {}
+		return true;
+	}
+	/**
 	 * Verifica se o texto passado possui caracteres especiais
 	 * @param texto - TExto a ser verificado
 	 * @return Tem caractere especial? True or False

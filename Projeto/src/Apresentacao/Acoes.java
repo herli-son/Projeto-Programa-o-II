@@ -17,6 +17,13 @@ public class Acoes {
 				switch (op) {
 				case "1":
 					Pessoa.Acessar();
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+					
+=======
+>>>>>>> e333595d01ec86a72a570431dcbd688c5b77b728
+>>>>>>> Stashed changes
 					break;
 				case "2":
 					Pessoa.Cadastrar();
