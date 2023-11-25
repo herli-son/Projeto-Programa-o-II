@@ -1,11 +1,9 @@
-package Entidades;
+package Repositorio.Entidades;
 /**
- * Estrutura para Pessoa
- * @author Herlison Silva Assunção
- *
+ * Estrutura completa para pessoa
  */
-public class Pessoa {
-    public String nome;
+public class PessoaEntity {
+	public String nome;
     public String sobrenome;
     public String acesso;
     public String senha;

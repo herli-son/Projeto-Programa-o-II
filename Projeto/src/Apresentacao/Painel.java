@@ -105,8 +105,8 @@ public class Painel {
 	 *         3 - Sair <br>
 	 *         4 - Próximo
 	 */
-	public static int AlterarDadoLista(String informacao) {
-		Object[] options = { "Anterior", "Alterar", "Excluir", "Sair", "Próximo" };
+	public static int AcessarDadoLista(String informacao) {
+		Object[] options = { "Anterior", "Acessar", "Sair", "Próximo" };
 		return JOptionPane.showOptionDialog(null, informacao, "Manutenção de lista.", JOptionPane.DEFAULT_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 	}
@@ -123,6 +123,9 @@ public class Painel {
 		int index = 0;
 		Object escolhido = JOptionPane.showInputDialog(null, "Selecione para visualizar.", "Lista",
 				JOptionPane.PLAIN_MESSAGE, null, opcao, opcao[0]);
+		if(escolhido == null)
+			return -1;
+		
 		for (String op : opcao) {
 			if (escolhido.toString().equals(op)) {
 				return index;
@@ -142,9 +145,13 @@ public class Painel {
 	public static int EscolherAdicionarDadoLista(String[] dados) {
 
 		int index = 0;
-		String[] opcao = Utilidades.ToArray.Concatena(new String[] { "Adicionar" }, dados);
+		String[] opcao = Utilidades.Array.Concatena(new String[] { "Adicionar" }, dados);
 		Object escolhido = JOptionPane.showInputDialog(null, "Selecione para visualizar: ", "Lista",
 				JOptionPane.PLAIN_MESSAGE, null, opcao, opcao[0]);
+		
+		if(escolhido == null)
+			return -1;
+		
 		for (String op : opcao) {
 			if (escolhido.toString().equals(op)) {
 				return index;

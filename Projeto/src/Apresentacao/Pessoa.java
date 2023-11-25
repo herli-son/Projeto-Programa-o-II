@@ -1,11 +1,8 @@
 package Apresentacao;
-
-import Controles.Info;
-import Servicos.Validacoes;
-import Utilidades.Copiar;
+import Controles.Validacoes;
+import Repositorio.Entidades.PessoaEntity;
+import Repositorio.Informacoes.PessoaInfo;
 import Utilidades.Globais;
-import Utilidades.ToArray;
-import Utilidades.ToEntity;
 
 /**
  *
@@ -30,17 +27,7 @@ public class Pessoa {
 					Painel.Informar("Em Desenvolvimento");
 					break;
 				case "4":
-<<<<<<< Updated upstream
-					// Lista de estabelecimentos vinculados à pessoa
-					Painel.Informar("Em Desenvolvimento");
-=======
-<<<<<<< HEAD
-					MeusEstabelecimentos();
-=======
-					// Lista de estabelecimentos vinculados à pessoa
-					Painel.Informar("Em Desenvolvimento");
->>>>>>> e333595d01ec86a72a570431dcbd688c5b77b728
->>>>>>> Stashed changes
+					Estabelecimento.AcessarLista();
 					break;
 				case "5":
 					Painel.Informar("Em Desenvolvimento");
@@ -58,10 +45,10 @@ public class Pessoa {
 
 	public static void Acessar() throws Exception {
 		String[] valores = { "", "", "_______________", "_______________" };
-		int[] campos = { 2, 3 };
+		int[] campos = PessoaInfo.CAMPOSACESSO;
 		for (int i = 0; i < campos.length; i++) {
-			valores[campos[i]] = Painel.Entrada(Menu.TextoDadosEntidade(Info.PESSOAS, valores, campos)
-					+ "\nDigite o valor para " + Info.PESSOAS[campos[i]] + ": ");
+			valores[campos[i]] = Painel.Entrada(Menu.TextoDadosEntidade(PessoaInfo.CAMPOS, valores, campos)
+					+ "\nDigite o valor para " + PessoaInfo.CAMPOS[campos[i]] + ": ");
 			if (valores[campos[i]] == null)
 				return;
 		}
@@ -73,36 +60,25 @@ public class Pessoa {
 		String[] pessoa = new String[] { "_______________", "_______________", "_______________", "_______________" };
 		int[] campos = { 0, 1, 2, 3 };
 		for (int i = 0; i < campos.length; i++) {
-			pessoa[i] = Painel.Entrada(Menu.TextoDadosEntidade(Info.PESSOAS, pessoa, campos) + "\nDigite o valor para "
-					+ Info.PESSOAS[campos[i]] + ": ");
+			pessoa[i] = Painel.Entrada(Menu.TextoDadosEntidade(PessoaInfo.CAMPOS, pessoa, campos) + "\nDigite o valor para "
+					+ PessoaInfo.CAMPOS[campos[i]] + ": ");
 			if (pessoa[i] == null)
 				return;
 		}
 		do {
-			pessoa = Acoes.VerAlterarCancelar(Info.PESSOAS, pessoa);
+			pessoa = Acoes.VerAlterarCancelar(PessoaInfo.CAMPOS, pessoa);
 			if (pessoa == null)
 				return;
-		} while (!Validacoes.CadastroPessoa(ToEntity.Pessoa(pessoa)));
-		Servicos.Pessoa.Criar(ToEntity.Pessoa(pessoa));
+		} while (!Validacoes.CadastroPessoa(PessoaInfo.GetEntity(pessoa)));
+		Controles.PessoaControl.Criar(PessoaInfo.GetEntity(pessoa));
 		Painel.Informar("Cadastro realizado!");
 	}
 
 	private static void Dados() throws Exception {
-		String[] pessoaArray = ToArray.InfoPessoa(Globais.PessoaLogada);
-		pessoaArray = Acoes.VerAlterar(Info.PESSOAS, pessoaArray, Info.INDEXPESSOAS);
-		Entidades.Pessoa pessoaEntidade = ToEntity.Pessoa(pessoaArray, ToArray.Pessoa(Globais.PessoaLogada));
-		Servicos.Pessoa.Atualizar(pessoaEntidade);
-		Globais.PessoaLogada = Copiar.Pessoa(pessoaEntidade);
+		String[] pessoaInfoArray = PessoaInfo.GetInfoArray(Globais.PessoaLogada);
+		pessoaInfoArray = Acoes.VerAlterar(PessoaInfo.CAMPOS, pessoaInfoArray, PessoaInfo.CAMPOSVISIVEIS, PessoaInfo.CAMPOSEDITAVEIS);
+		PessoaEntity pessoaEntidade = PessoaInfo.GetEntity(pessoaInfoArray, PessoaInfo.GetArray(Globais.PessoaLogada));
+		Controles.PessoaControl.Atualizar(pessoaEntidade);
+		Globais.PessoaLogada = PessoaInfo.Copiar(pessoaEntidade);
 	}
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-	
-	private static void MeusEstabelecimentos() throws Exception {
-		String[] IDs = ToArray.Lista(Globais.PessoaLogada.estabelecimentosVinculados);
-		Estabelecimento.Lista(IDs);
-	}
-=======
->>>>>>> e333595d01ec86a72a570431dcbd688c5b77b728
->>>>>>> Stashed changes
 }

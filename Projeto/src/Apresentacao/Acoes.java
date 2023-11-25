@@ -1,7 +1,7 @@
 package Apresentacao;
 
 import Utilidades.Globais;
-import Utilidades.ToArray;
+import Utilidades.Array;
 
 public class Acoes {
 
@@ -17,13 +17,6 @@ public class Acoes {
 				switch (op) {
 				case "1":
 					Pessoa.Acessar();
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-					
-=======
->>>>>>> e333595d01ec86a72a570431dcbd688c5b77b728
->>>>>>> Stashed changes
 					break;
 				case "2":
 					Pessoa.Cadastrar();
@@ -46,21 +39,32 @@ public class Acoes {
 	 * @return Entidade com novos valores
 	 * @throws Exception Existem mais dados do que a info necessita
 	 */
-	public static String[] Atualizar(String[] infoEntidade, String[] dados) throws Exception {
+	public static String[] Atualizar(String[] infoEntidade, String[] dados, int[] campos) throws Exception {
 		String[] atualizado = dados.clone();
+		String[] camposAlterar = new String[campos.length];
+		String[] valoresAlterar = new String[campos.length];
+
+		for (int i = 0; i < camposAlterar.length; i++) {
+			camposAlterar[i] = Array.ConcatenarCampos(infoEntidade, new int[] { campos[i] });
+			valoresAlterar[i] = Array.ConcatenarCampos(atualizado, new int[] { campos[i] });
+		}
+
 		while (true) {
+			
 			String op = Painel.Opcao(Menu.MontaMenuOpcoes(
-					ToArray.Concatena(infoEntidade, new String[] { "Cancelar", "Salvar" }), atualizado));
+					Array.Concatena(camposAlterar, new String[] { "Cancelar", "Salvar" }), valoresAlterar));
 			int i = Integer.parseInt(op) - 1;
 			String valor;
-			if (i == infoEntidade.length || i == -1)
+			if (i == camposAlterar.length || i == -1)
 				return dados;
-			else if (i == infoEntidade.length + 1)
+			else if (i == camposAlterar.length + 1)
 				return atualizado;
 			else {
-				valor = Painel.Entrada("Novo valor para " + infoEntidade[i] + ": ");
-				if (valor != null)
-					atualizado[i] = valor;
+				valor = Painel.Entrada("Novo valor para " + camposAlterar[i] + ": ");
+				if (valor != null) {
+					atualizado[campos[i]] = valor;
+					valoresAlterar[i] = valor;
+				}
 			}
 		}
 	}
@@ -75,7 +79,7 @@ public class Acoes {
 	 *                   existe para essa entidade
 	 */
 	public static void Ver(String[] infoEntidade, String[] dados, int[] campos) throws Exception {
-		Painel.Informar(Menu.TextoDadosEntidade(infoEntidade, infoEntidade, campos));
+		Painel.Informar(Menu.TextoDadosEntidade(infoEntidade, dados, campos));
 	}
 
 	/**
@@ -102,9 +106,10 @@ public class Acoes {
 	 * @throws Exception Os dados não corresponde a uma entidade ou o campo não
 	 *                   existe para essa entidade
 	 */
-	public static String[] VerAlterar(String[] infoEntidade, String[] dados, int[] campos) throws Exception {
-		while (Painel.SimOuNao(Menu.TextoDadosEntidade(infoEntidade, dados, campos)))
-			dados = Atualizar(infoEntidade, dados);
+	public static String[] VerAlterar(String[] infoEntidade, String[] dados, int[] camposVer, int[] camposAlterar)
+			throws Exception {
+		while (Painel.SimOuNao(Menu.TextoDadosEntidade(infoEntidade, dados, camposVer)))
+			dados = Atualizar(infoEntidade, dados, camposAlterar);
 		return dados;
 	}
 
@@ -120,7 +125,7 @@ public class Acoes {
 		int[] campos = new int[infoEntidade.length];
 		for (int i = 0; i < campos.length; i++)
 			campos[i] = i;
-		return VerAlterar(infoEntidade, dados, campos);
+		return VerAlterar(infoEntidade, dados, campos, campos);
 	}
 
 	/**
@@ -134,12 +139,12 @@ public class Acoes {
 	 * @throws Exception O campo não existe no array <br>
 	 *                   Os dados não tem quantidade de campos correspondente a info
 	 */
-	public static void VerLista(String[] infoEntidade, String[][] dados, int[] campos, int[] camposMostrar)
+	public static void VerLista(String[] infoEntidade, String[][] dados, int[] campos, int[] camposIdentificar)
 			throws Exception {
 		int index, opcao;
 		String[] itens = new String[dados.length];
 		for (int i = 0; i < dados.length; i++) {
-			itens[i] = ToArray.ConcatenarCampos(dados[i], camposMostrar);
+			itens[i] = Array.ConcatenarCampos(dados[i], camposIdentificar);
 		}
 		do {
 			index = Painel.EscolherDadoLista(itens);
@@ -168,11 +173,24 @@ public class Acoes {
 	 * @throws Exception O campo não existe no array <br>
 	 *                   Os dados não tem quantidade de campos correspondente a info
 	 */
-	public static void VerLista(String[] infoEntidade, String[][] dados, int[] camposMostrar) throws Exception {
+	public static void VerLista(String[] infoEntidade, String[][] dados, int[] camposIdentificar) throws Exception {
 		int[] campos = new int[infoEntidade.length];
 		for (int i = 0; i < campos.length; i++)
 			campos[i] = i;
-		VerLista(infoEntidade, dados, campos, camposMostrar);
+		VerLista(infoEntidade, dados, campos, camposIdentificar);
+	}
+
+	/**
+	 * 
+	 * @param infoEntidade
+	 * @param dados
+	 * @throws Exception
+	 */
+	public static void VerLista(String[] infoEntidade, String[][] dados) throws Exception {
+		int[] campos = new int[infoEntidade.length];
+		for (int i = 0; i < campos.length; i++)
+			campos[i] = i;
+		VerLista(infoEntidade, dados, campos, new int[] { 0 });
 	}
 
 	/**
@@ -188,38 +206,24 @@ public class Acoes {
 	 *                   Os dados informados não estão na mesma quatidade dos
 	 *                   camposinfo da entidade <br>
 	 */
-	public static int[] VerAlterarLista(String[] infoEntidade, String[][] dados, int[] campos, int[] camposMostrar)
-			throws Exception {
+	public static int AcessarLista(String[] infoEntidade, String[][] dados, int[] campos, int[] camposIdentificar,
+			int index) throws Exception {
 
-		int index, opcao;
-		String strIndexsAlterados = "";
-		String[] itens;
-		itens = ToArray.ConcatenarListaCampos(dados, camposMostrar);
 		do {
-			index = Painel.EscolherDadoLista(itens);
-			if (index >= 0) {
-				do {
-					opcao = Painel.AlterarDadoLista(Menu.TextoDadosEntidade(infoEntidade, dados[index], campos));
-					switch (opcao) {
-					case 0:
-						index = Globais.Proximo(index, dados.length);
-						break;
-					case 1:
-						dados[index] = Atualizar(infoEntidade, dados[index]);
-						strIndexsAlterados += (strIndexsAlterados.equals("") ? "" : ",") + String.valueOf(index);
-						break;
-					case 2:
-						// Criar exclusão
-						Painel.Informar("Em desenvolvimento");
-						break;
-					case 4:
-						index = Globais.Anterior(index);
-						break;
-					}
-				} while (opcao != 3 && opcao != -1);
+			int opcao = Painel.AcessarDadoLista(Menu.TextoDadosEntidade(infoEntidade, dados[index], campos));
+			switch (opcao) {
+			case 0:
+				index = Globais.Anterior(index);
+				break;
+			case 1:
+				return index;
+			case 3:
+				index = Globais.Proximo(index, dados.length);
+				break;
+			default:
+				return -2;
 			}
-		} while (index != -1);
-		return ToArray.StringToInt(ToArray.Lista(strIndexsAlterados));
+		} while (true);
 	}
 
 	/**
@@ -234,11 +238,31 @@ public class Acoes {
 	 *                    Os dados informados não estão na mesma quatidade dos
 	 *                    camposinfo da entidade <br>
 	 */
-	public static int[] VerAlterarLista(String[] infoEntidade, String[][] dados, int[] camposMostrar) throws Exception {
+	public static int AcessarLista(String[] infoEntidade, String[][] dados, int[] camposIdentificar, int index) throws Exception {
 		int[] campos = new int[infoEntidade.length];
 		for (int i = 0; i < campos.length; i++)
 			campos[i] = i;
-		return VerAlterarLista(infoEntidade, dados, campos, camposMostrar);
+		return AcessarLista(infoEntidade, dados, campos, camposIdentificar, index);
+	}
+
+	/**
+	 * 
+	 * @param infoEntidade
+	 * @param dados
+	 * @return
+	 * @throws Exception
+	 */
+	public static int AcessarLista(String[] infoEntidade, String[][] dados, int index) throws Exception {
+		int[] campos = new int[infoEntidade.length];
+		for (int i = 0; i < campos.length; i++)
+			campos[i] = i;
+		return AcessarLista(infoEntidade, dados, campos, campos, index);
+	}
+	public static int AcessarLista(String[] infoEntidade, String[][] dados) throws Exception {
+		int[] campos = new int[infoEntidade.length];
+		for (int i = 0; i < campos.length; i++)
+			campos[i] = i;
+		return AcessarLista(infoEntidade, dados, campos, campos, 0);
 	}
 
 	/**
@@ -254,13 +278,14 @@ public class Acoes {
 	 *                   camposinfo da entidade <br>
 	 *                   O index do campo não existe
 	 */
-	public static String[] VerAlterarCancelar(String[] infoEntidade, String[] dados, int[] campos) throws Exception {
+	public static String[] VerAlterarCancelar(String[] infoEntidade, String[] dados, int[] campos, int[] camposAlterar)
+			throws Exception {
 		int op;
 		do {
 			op = Painel.SimOuNaoOuCancelar(
 					Menu.TextoDadosEntidade(infoEntidade, dados, campos) + "\nAlterar alguma informação?");
 			if (op == 0)
-				dados = Acoes.Atualizar(infoEntidade, dados);
+				dados = Acoes.Atualizar(infoEntidade, dados, camposAlterar);
 			else if (op == 2 || op == -1)
 				return null;
 
@@ -283,6 +308,21 @@ public class Acoes {
 		int[] campos = new int[infoEntidade.length];
 		for (int i = 0; i < campos.length; i++)
 			campos[i] = i;
-		return VerAlterarCancelar(infoEntidade, dados, campos);
+		return VerAlterarCancelar(infoEntidade, dados, campos, campos);
+	}
+
+	public static int ManutencaoLista(String[] infoEntidade, String[][] dados, int[] campos, int[] camposIdentificar)
+			throws Exception {
+		int index;
+		String[] itens;
+		itens = Array.ConcatenarListaCampos(dados, camposIdentificar);
+		do {
+			index = Painel.EscolherAdicionarDadoLista(itens);
+			if (index < 1)
+				return index;
+			else {
+				return AcessarLista(infoEntidade, dados, campos, camposIdentificar, index - 1) + 1;
+			}
+		} while (true);
 	}
 }

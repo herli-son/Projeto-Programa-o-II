@@ -1,53 +1,6 @@
 package Utilidades;
 
-public class ToArray {
-	/**
-	 * Converte entidade Pessoa para uma lista de array de String
-	 * 
-	 * @param pessoa - Pessoa que será convertida
-	 * @return Dados da pessoa em Array
-	 */
-	public static String[] Pessoa(Entidades.Pessoa pessoa) {
-		return new String[] { pessoa.nome, pessoa.sobrenome, pessoa.acesso, pessoa.senha,
-				pessoa.estabelecimentosVinculados, pessoa.servicosReservados, pessoa.produtosReservados,
-				pessoa.funcionariosAvaliados, pessoa.estabelecimentosAvaliados, pessoa.produtosAvaliados,
-				pessoa.servicosAvaliados };
-	}
-<<<<<<< Updated upstream
-	public static String[] InfoPessoa(Entidades.Pessoa pessoa) {
-		return new String[] { pessoa.nome, pessoa.sobrenome, pessoa.acesso, pessoa.senha};
-=======
-<<<<<<< HEAD
-
-	public static String[] InfoPessoa(Entidades.Pessoa pessoa) {
-		return new String[] { pessoa.nome, pessoa.sobrenome, pessoa.acesso, pessoa.senha };
->>>>>>> Stashed changes
-	}
-	/**
-	 * Converte entidade Estabelecimento para uma lista de array de String
-	 * 
-	 * @param estabelecimento - estabelecimento que será convertido
-	 * @return Dados do estabelecimento em array
-	 */
-	public static String[] Estabelecimento(Entidades.Estabelecimento estabelecimento) {
-		return new String[] { estabelecimento.nome, estabelecimento.cnpj, estabelecimento.descricao,
-				estabelecimento.abertura, estabelecimento.fechamento, estabelecimento.funcoes,
-				estabelecimento.avaliacoes, estabelecimento.servicos, estabelecimento.produtos,
-				estabelecimento.funcionarios, estabelecimento.servicosReservados, estabelecimento.produtosReservados };
-	}
-
-	public static String[] InfoEstabelecimento(Entidades.Estabelecimento estabelecimento) {
-		return new String[] { estabelecimento.nome, estabelecimento.cnpj, estabelecimento.descricao,
-				estabelecimento.abertura, estabelecimento.fechamento };
-	}
-	public static String[] InfoEstabelecimento(String[]  estabelecimento) {
-		return new String[] { estabelecimento[0], estabelecimento[1], estabelecimento[2],
-				estabelecimento[3], estabelecimento[4] };
-=======
-	public static String[] InfoPessoa(Entidades.Pessoa pessoa) {
-		return new String[] { pessoa.nome, pessoa.sobrenome, pessoa.acesso, pessoa.senha};
->>>>>>> e333595d01ec86a72a570431dcbd688c5b77b728
-	}
+public class Array {
 	/**
 	 * Transforma lista de string em array
 	 * 
@@ -102,7 +55,7 @@ public class ToArray {
 			texto += dados[index] + " - ";
 		}
 
-		texto = texto.substring(texto.length() - 3, texto.length());
+		texto = texto.substring(0, texto.length() - 3);
 		return texto;
 	}
 

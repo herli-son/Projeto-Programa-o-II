@@ -1,13 +1,9 @@
-package Entidades;
-
+package Repositorio.Entidades;
 /**
- * Estrutura para estabelecimento
- * 
- * @author Luan Henrique Campos Soares
- *
+ * Estrutura completa para Estabelecimento
  */
-public class Estabelecimento {
-
+public class EstabelecimentoEntity {
+	public String id;
 	public String nome;
 	public String cnpj;
 	public String descricao;
@@ -20,5 +16,4 @@ public class Estabelecimento {
 	public String funcionarios;
 	public String servicosReservados;
 	public String produtosReservados;
-
 }

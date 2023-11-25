@@ -1,6 +1,8 @@
-package Servicos;
+package Controles;
 
 import Apresentacao.Painel;
+import Repositorio.Entidades.EstabelecimentoEntity;
+import Repositorio.Entidades.PessoaEntity;
 import Utilidades.Globais;
 
 public class Validacoes {
@@ -36,7 +38,7 @@ public class Validacoes {
 	 */
 	public static boolean AcessoPessoa(String acesso, String senha) {
 		try {
-			Entidades.Pessoa pessoa = Pessoa.Ler(acesso);	
+			PessoaEntity pessoa = PessoaControl.Ler(acesso);	
 			if(pessoa.senha.equals(senha)) {
 				Painel.Informar("Acesso autorizado!");
                                 Globais.PessoaLogada = pessoa;
@@ -55,14 +57,14 @@ public class Validacoes {
 	 * @param pessoa - Dados da pessoa que será cadastrada
 	 * @return Pode cadastrar? True or False 
 	 */
-	public static boolean CadastroPessoa(Entidades.Pessoa pessoa) {
+	public static boolean CadastroPessoa(PessoaEntity pessoa) {
 		
 		if(TemEspecial(pessoa.acesso)) {
 			Painel.Erro( "O acessoa não deve ter caracteres especiais!");
 			return false;
 		}
 		try {
-			Pessoa.Ler(pessoa.acesso);
+			PessoaControl.Ler(pessoa.acesso);
 			Painel.Erro( "Já existe uma pessoa com o acesso " + pessoa.acesso);
 			return false;
 		} catch (Exception e) {}
@@ -75,7 +77,7 @@ public class Validacoes {
 	 */
 	public static boolean AcessoEstabelecimento(String cnpj) {
 		try {
-			Entidades.Estabelecimento estabelecimento = Servicos.Estabelecimento.Ler(cnpj);
+			EstabelecimentoEntity estabelecimento = Controles.EstabelecimentoControl.Ler(cnpj);
 			Globais.EstabelecimentoLogado = estabelecimento;
 			return true;
 		} catch(Exception e) {
@@ -83,15 +85,19 @@ public class Validacoes {
 			return false;
 		}
 	}
-	
-	public static boolean CadastroEstabelecimento(Entidades.Estabelecimento estabelecimento) {
+	/**
+	 * 
+	 * @param estabelecimento
+	 * @return
+	 */
+	public static boolean CadastroEstabelecimento(EstabelecimentoEntity estabelecimento) {
 		
 		if(TemEspecial(estabelecimento.cnpj)) {
 			Painel.Erro("O CNPJ não deve ter caracteres especiais!");
 			return false;
 		}
 		try {
-			Estabelecimento.Ler(estabelecimento.cnpj);
+			EstabelecimentoControl.Ler(estabelecimento.cnpj);
 			Painel.Erro("Já existe um estabelecimento com esse CNPJ" + estabelecimento.cnpj);
 			return false;
 		} catch (Exception e) {}

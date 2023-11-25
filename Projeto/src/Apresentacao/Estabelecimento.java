@@ -1,11 +1,13 @@
 package Apresentacao;
 
-import Controles.Info;
-import Servicos.Validacoes;
-import Utilidades.Copiar;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import Controles.Validacoes;
+import Repositorio.Entidades.EstabelecimentoEntity;
+import Repositorio.Informacoes.EstabelecimentoInfo;
+import Utilidades.Array;
 import Utilidades.Globais;
-import Utilidades.ToArray;
-import Utilidades.ToEntity;
 
 public class Estabelecimento {
 
@@ -37,75 +39,61 @@ public class Estabelecimento {
 		}
 	}
 
-	public static void Acessar() throws Exception {
-		String[] valores = { "", "______________", "", "", "" };
-		int[] campos = { 1 };
-		for (int i = 0; i < campos.length; i++) {
-			valores[campos[i]] = Painel.Entrada((Menu.TextoDadosEntidade(Info.ESTABELECIMENTO, valores, campos))
-					+ "\nDigite o valor para " + Info.ESTABELECIMENTO[campos[i]] + ": ");
-			if (valores[campos[i]] == null)
-				return;
-		}
-		if (Validacoes.AcessoEstabelecimento(valores[campos[0]]))
-			new Estabelecimento();
-	}
-
 	public static String Cadastrar() throws Exception {
-		String[] estabelecimento = new String[] { "_______________", "_______________",
+		String[] estabelecimento = new String[] {"" ,"_______________", "_______________",
 				"_______________", "_______________", "_______________" };
-		int[] campos = { 0, 1, 2, 3, 4 };
+		int[] campos = { 1, 2, 3, 4, 5 };
 		for(int i =0; i < campos.length; i++) {
-			estabelecimento[i] = Painel.Entrada(Menu.TextoDadosEntidade(Info.ESTABELECIMENTO, estabelecimento, campos)
-					+ "\nDigite o valor para " + Info.ESTABELECIMENTO[campos[i]] + ": ");
-			if (estabelecimento[i] == null)
+			estabelecimento[campos[i]] = Painel.Entrada(Menu.TextoDadosEntidade(EstabelecimentoInfo.CAMPOS, estabelecimento, campos)
+					+ "\nDigite o valor para " + EstabelecimentoInfo.CAMPOS[campos[i]] + ": ");
+			if (estabelecimento[campos[i]] == null)
 				return null;
 		}
 		do {
-			estabelecimento = Acoes.VerAlterarCancelar(Info.ESTABELECIMENTO, estabelecimento);
+			estabelecimento = Acoes.VerAlterarCancelar(EstabelecimentoInfo.CAMPOS, estabelecimento, campos ,campos);
 			if (estabelecimento == null)
 				return null;
-		} while (!Validacoes.CadastroEstabelecimento(ToEntity.Estabelecimento(estabelecimento)));
-		Servicos.Estabelecimento.Criar(ToEntity.Estabelecimento(estabelecimento));
+		} while (!Validacoes.CadastroEstabelecimento(EstabelecimentoInfo.GetEntity(estabelecimento)));
+		Controles.EstabelecimentoControl.Criar(EstabelecimentoInfo.GetEntity(estabelecimento));
 		Painel.Informar("Cadastro realizado!");
 		return estabelecimento[1];
 	}
 
 	private static void Dados() throws Exception {
-		String[] estabelecimentoArray = ToArray.InfoEstabelecimento(Globais.EstabelecimentoLogado);
-		estabelecimentoArray = Acoes.VerAlterar(Info.ESTABELECIMENTO, estabelecimentoArray, Info.INDEXESTABELECIMENTO);
-		Entidades.Estabelecimento estabelecimentoEntidade = ToEntity.Estabelecimento(estabelecimentoArray,
-				ToArray.Estabelecimento(Globais.EstabelecimentoLogado));
-		Servicos.Estabelecimento.Atualizar(estabelecimentoEntidade);
-		Globais.EstabelecimentoLogado = Copiar.Estabelecimento(estabelecimentoEntidade);
+		String[] estabelecimentoArray = EstabelecimentoInfo.GetInfoArray(Globais.EstabelecimentoLogado);
+		estabelecimentoArray = Acoes.VerAlterar(EstabelecimentoInfo.CAMPOS, estabelecimentoArray, EstabelecimentoInfo.CAMPOSVISIVEIS, EstabelecimentoInfo.CAMPOSEDITAVEIS);
+		EstabelecimentoEntity estabelecimentoEntidade = EstabelecimentoInfo.GetEntity(estabelecimentoArray, EstabelecimentoInfo.GetArray(Globais.EstabelecimentoLogado));
+		Controles.EstabelecimentoControl.Atualizar(estabelecimentoEntidade);
+		Globais.EstabelecimentoLogado = EstabelecimentoInfo.Copiar(estabelecimentoEntidade);
 	}
 	
-	public static void Lista(String[] IDs) throws Exception {
-		String[][] estabelecimentos = new String[IDs.length][12];
-		
-		for(int i = 0; i < IDs.length; i++) {
-			estabelecimentos[i] = ToArray.Estabelecimento(Servicos.Estabelecimento.Ler(IDs[i]));
-		}
-		
-		int escolhido;
+	public static void AcessarLista() throws Exception {
 		
 		do {
-			escolhido = Painel.EscolherAdicionarDadoLista(IDs);
+			String[][] estabelecimentos = BuscarEstabelecimentos();
+ 			int escolhido = Acoes.ManutencaoLista(EstabelecimentoInfo.CAMPOS, EstabelecimentoInfo.GetListInfoArray(estabelecimentos), EstabelecimentoInfo.CAMPOSVISIVEIS, EstabelecimentoInfo.CAMPOSIDENTIFICAR);
+			
 			switch (escolhido) {
-			case -1: 
-				return;			
 			case 0:
-				String cnpj = Cadastrar();
-				if (cnpj != null)
-					Servicos.Estabelecimento.VincularPessoa(cnpj);
+				Cadastrar();
 				break;
+			case -1:
+				return;
 			default:
-				String[] infoString = Acoes.VerAlterar(Info.ESTABELECIMENTO, ToArray.InfoEstabelecimento(estabelecimentos[escolhido -1]), Info.INDEXESTABELECIMENTO);
-				Entidades.Estabelecimento estabelecimento = ToEntity.Estabelecimento(infoString, estabelecimentos[escolhido -1]);
-				Servicos.Estabelecimento.Atualizar(estabelecimento);
-				estabelecimentos[escolhido -1] = ToArray.Estabelecimento(estabelecimento);
+				Globais.EstabelecimentoLogado = EstabelecimentoInfo.GetEntity(estabelecimentos[escolhido - 1]);
+				new Estabelecimento();
 			}
-		} while (escolhido != -1);
+		} while (true);
 	}
 	
+	private static String[][] BuscarEstabelecimentos() throws FileNotFoundException, IOException {
+		String[] ids = Array.Lista(Globais.PessoaLogada.estabelecimentosVinculados);
+		String[][] estabelecimentos = new String[ids.length][EstabelecimentoInfo.TOTALCAMPOS];
+
+		for(int i = 0; i < ids.length; i++) {
+			estabelecimentos[i] = EstabelecimentoInfo.GetArray(Controles.EstabelecimentoControl.Ler(ids[i]));
+		}
+		return estabelecimentos;
+	}
 	
 }
