@@ -36,6 +36,22 @@ public class Array {
 
 		return concat;
 	}
+	public static int[] Concatena(int[] p, int[] s) {
+		int[] concat = new int[p.length + s.length];
+		int index = 0;
+
+		for (int value : p) {
+			concat[index] = value;
+			index++;
+		}
+
+		for (int value : s) {
+			concat[index] = value;
+			index++;
+		}
+
+		return concat;
+	}
 
 	/**
 	 * Retorna campos de uma entidade concatenados

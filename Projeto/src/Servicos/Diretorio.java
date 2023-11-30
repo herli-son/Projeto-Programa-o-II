@@ -7,8 +7,7 @@ public class Diretorio {
 	 * Diretórios que são necessários
 	 */
 	public static final String[] DIRETORIOS = { "Dados", "Dados//Pessoa", "Dados//Estabelecimento",
-			"Dados//Funcionario", "Dados//Funcao", "Dados//Avaliacao", "Dados//Avaliacao//Servico",
-			"Dados//Avaliacao//Produto", "Dados//Avaliacao//Funcionario", "Dados//Avaliacao//Estabelecimento",
+			"Dados//Funcionario", "Dados//Funcao", "Dados//Avaliacao",
 			"Dados//Reserva", "Dados//Reserva//Servico", "Dados//Reserva//Produto", "Dados//Servico", "Dados//Produto",
 			"Dados//Insumo", };
 
@@ -43,5 +42,14 @@ public class Diretorio {
 	 */
 	public static String Estabelecimento() {
 		return DIRETORIOS[2];
+	}
+	public static String Funcionario() {
+		return DIRETORIOS[3];
+	}
+	public static String Funcao() {
+		return DIRETORIOS[4];
+	}
+	public static String Avaliacao() {
+		return DIRETORIOS[5];
 	}
 }

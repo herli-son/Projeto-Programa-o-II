@@ -57,6 +57,7 @@ public class Painel {
 	public static String Opcao(String[] opcoes) {
 		JList<Object> lista = new JList<Object>(opcoes);
 		lista.setBackground((Color) UIManager.get("OptionPane.background"));
+		lista.setSelectedIndex(0);
 		JOptionPane.showMessageDialog(null, lista, "Selecione:", JOptionPane.PLAIN_MESSAGE);
 		return String.valueOf(lista.getSelectedIndex() + 1);
 	}
@@ -118,10 +119,10 @@ public class Painel {
 	 * @return Opção escolhida <br>
 	 *         -1 - Cancelou
 	 */
-	public static int EscolherDadoLista(String[] opcao) {
+	public static int EscolherDadoLista(String[] opcao, String obj) {
 
 		int index = 0;
-		Object escolhido = JOptionPane.showInputDialog(null, "Selecione para visualizar.", "Lista",
+		Object escolhido = JOptionPane.showInputDialog(null, "Selecione: " + obj, "Lista",
 				JOptionPane.PLAIN_MESSAGE, null, opcao, opcao[0]);
 		if(escolhido == null)
 			return -1;
@@ -142,11 +143,11 @@ public class Painel {
 	 * @return Opção escolhida <br>
 	 *         0 - Adicionar
 	 */
-	public static int EscolherAdicionarDadoLista(String[] dados) {
+	public static int EscolherAdicionarDadoLista(String[] dados, String obj) {
 
 		int index = 0;
 		String[] opcao = Utilidades.Array.Concatena(new String[] { "Adicionar" }, dados);
-		Object escolhido = JOptionPane.showInputDialog(null, "Selecione para visualizar: ", "Lista",
+		Object escolhido = JOptionPane.showInputDialog(null, "Selecione para visualizar: " + obj, "Lista",
 				JOptionPane.PLAIN_MESSAGE, null, opcao, opcao[0]);
 		
 		if(escolhido == null)

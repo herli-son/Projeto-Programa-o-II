@@ -2,7 +2,7 @@ package Repositorio.Entidades;
 /**
  * Estrutura completa para Estabelecimento
  */
-public class EstabelecimentoEntity {
+public class Estabelecimento {
 	public String id;
 	public String nome;
 	public String cnpj;
@@ -14,6 +14,6 @@ public class EstabelecimentoEntity {
 	public String servicos;
 	public String produtos;
 	public String funcionarios;
-	public String servicosReservados;
-	public String produtosReservados;
+	public String reservas;
+	public String compras;
 }

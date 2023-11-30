@@ -1,7 +1,10 @@
 package Utilidades;
 
-import Repositorio.Entidades.EstabelecimentoEntity;
-import Repositorio.Entidades.PessoaEntity;
+import Repositorio.Entidades.Estabelecimento;
+import Repositorio.Entidades.Funcionario;
+import Repositorio.Entidades.Pessoa;
+import Repositorio.Entidades.Funcao;
+import Repositorio.Entidades.Avaliacao;
 
 /**
  *
@@ -11,9 +14,11 @@ public class Globais {
     /**
      * Pessoa que realizou login
      */
-    public static PessoaEntity PessoaLogada;
-    
-    public static EstabelecimentoEntity EstabelecimentoLogado;
+    public static Pessoa Pessoa;
+    public static Estabelecimento Estabelecimento;
+    public static Funcionario Funcionario;
+    public static Funcao Funcao;
+    public static Avaliacao Avaliacao;
     /**
     * Caracteres válidos para cadastrar
     */

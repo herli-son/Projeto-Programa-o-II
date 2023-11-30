@@ -1,6 +1,6 @@
 package Repositorio.Informacoes;
 
-import Repositorio.Entidades.PessoaEntity;
+import Repositorio.Entidades.Pessoa;
 /**
  * Informações da Pessoa
  */
@@ -25,10 +25,11 @@ public class PessoaInfo {
 	 * 
 	 */
 	public static final int[] CAMPOSACESSO = { 2, 3 };
+	public static final int[] CAMPOSIDENTIFICAR = { 2, 0 };
 	/**
 	 * 
 	 */
-	public static final int TOTALCAMPOS = 11;
+	public static final int TOTALCAMPOS = 8;
 	/**
 	 * Converte array de String na entidade pessoa
 	 * 
@@ -36,7 +37,7 @@ public class PessoaInfo {
 	 * @return Entidade Pessoa, quando passado o info array, retorna os campo de
 	 *         lista vazios
 	 */
-	public static PessoaEntity GetEntity(String[] array) {
+	public static Pessoa GetEntity(String[] array) {
 		String[] info = { array[0], array[1], array[2], array[3] };
 		return GetEntity(info, array);
 	}
@@ -49,8 +50,8 @@ public class PessoaInfo {
 	 * @return Entidade Pessoa, quando passado o info array, retorna os campo de
 	 *         lista vazios
 	 */
-	public static PessoaEntity GetEntity(String[] info, String[] array) {
-		PessoaEntity pessoa = new PessoaEntity();
+	public static Pessoa GetEntity(String[] info, String[] array) {
+		Pessoa pessoa = new Pessoa();
 
 		pessoa.nome = info[0];
 		pessoa.sobrenome = info[1];
@@ -61,18 +62,12 @@ public class PessoaInfo {
 			pessoa.estabelecimentosVinculados = "";
 			pessoa.servicosReservados = "";
 			pessoa.produtosReservados = "";
-			pessoa.funcionariosAvaliados = "";
-			pessoa.estabelecimentosAvaliados = "";
-			pessoa.produtosAvaliados = "";
-			pessoa.servicosAvaliados = "";
+			pessoa.avaliacoes = "";
 		} else {
 			pessoa.estabelecimentosVinculados = array[4];
 			pessoa.servicosReservados = array[5];
 			pessoa.produtosReservados = array[6];
-			pessoa.funcionariosAvaliados = array[7];
-			pessoa.estabelecimentosAvaliados = array[8];
-			pessoa.produtosAvaliados = array[9];
-			pessoa.servicosAvaliados = array[10];
+			pessoa.avaliacoes = array[7];
 		}
 		return pessoa;
 	}
@@ -82,18 +77,17 @@ public class PessoaInfo {
 	 * @param pessoa - Pessoa que será convertida
 	 * @return Dados da pessoa em Array
 	 */
-	public static String[] GetArray(PessoaEntity pessoa) {
+	public static String[] GetArray(Pessoa pessoa) {
 		return new String[] { pessoa.nome, pessoa.sobrenome, pessoa.acesso, pessoa.senha,
 				pessoa.estabelecimentosVinculados, pessoa.servicosReservados, pessoa.produtosReservados,
-				pessoa.funcionariosAvaliados, pessoa.estabelecimentosAvaliados, pessoa.produtosAvaliados,
-				pessoa.servicosAvaliados };
+				pessoa.avaliacoes};
 	}
 	/**
 	 * 
 	 * @param pessoa
 	 * @return
 	 */
-	public static String[] GetInfoArray(PessoaEntity pessoa) {
+	public static String[] GetInfoArray(Pessoa pessoa) {
 		return new String[] { pessoa.nome, pessoa.sobrenome, pessoa.acesso, pessoa.senha};
 	}
 	/**
@@ -109,8 +103,8 @@ public class PessoaInfo {
      * @param pessoa - Pessoa que será copiada
      * @return Cópia da pessoa
      */
-    public static PessoaEntity Copiar(PessoaEntity pessoa){
-    	PessoaEntity p = new PessoaEntity();
+    public static Pessoa Copiar(Pessoa pessoa){
+    	Pessoa p = new Pessoa();
         p.acesso = pessoa.acesso;
         p.nome = pessoa.nome;
         p.sobrenome = pessoa.sobrenome;
@@ -118,10 +112,40 @@ public class PessoaInfo {
         p.estabelecimentosVinculados = pessoa.estabelecimentosVinculados; 
         p.servicosReservados = pessoa.servicosReservados;
         p.produtosReservados = pessoa.produtosReservados;
-        p.funcionariosAvaliados = pessoa.funcionariosAvaliados;
-        p.estabelecimentosAvaliados = pessoa.estabelecimentosAvaliados;
-        p.produtosAvaliados = pessoa.produtosAvaliados;
-        p.servicosAvaliados = pessoa.produtosAvaliados;
+        p.avaliacoes = pessoa.avaliacoes;
         return p;
     }
+public static String[][] GetListInfoArray(String[][] pessoas) {
+		
+		String[][] infos = new String[pessoas.length][CAMPOS.length];
+		
+		for (int i = 0; i < infos.length; i++) {
+			infos[i] = GetInfoArray(pessoas[i]);
+		}
+		
+		return infos;
+		
+	}
+public static String[][] GetListInfoArray(Pessoa[] pessoas) {
+	
+	String[][] infos = new String[pessoas.length][CAMPOS.length];
+	
+	for (int i = 0; i < infos.length; i++) {
+		infos[i] = GetInfoArray(pessoas[i]);
+	}
+	
+	return infos;
+	
+}
+public static Pessoa[] AdicionarPessoaLista(Pessoa[] pessoas, Pessoa pessoa) {
+	Pessoa[] aux = pessoas;
+
+	pessoas = new Pessoa[pessoas.length + 1];
+    int i;
+    for (i = 0; i < aux.length; i++) {
+    	pessoas[i] = aux[i];
+    }
+    pessoas[i] = pessoa;
+    return pessoas;
+}
 }

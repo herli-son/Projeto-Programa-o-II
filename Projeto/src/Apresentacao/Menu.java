@@ -9,14 +9,12 @@ public class Menu {
 	/**
 	 * Menu para pessoa logada
 	 */
-	public static final String[] PESSOA = { "1 - Meus dados", "2 - Minhas avaliações", "3 - Minhas compras",
-			"4 - Meus estabelecimentos", "5 - Estabelecimentos", "6 - Sair" };
+	public static final String[] PESSOA = { "1 - Dados", "2 - Avaliações", "3 - Compras","4 - Estabelecimentos", "5 - Sair" };
 	/**
-<<<<<<< Updated upstream
 	 * Menu de avaliações para visualizar
 	 */
-	public static final String[] AVALIACOES = { "1 - Funcionarios", "2 - Estabelecimentos", "3 - Produtos",
-			"4 - Serviços", "5 - Voltar" };
+	public static final String[] AVALIACOES = { "1 - Funcionário", "2 - Estabelecimento", "3 - Produto","4 - Serviço", "5 - Voltar" };
+	public static final String[] AVALIACAO = {"1 - Dados", "2 - Sair"};
 	/**
 	 * Menu de compras feitas
 	 */
@@ -24,9 +22,9 @@ public class Menu {
 	/**
 	* Menu para estabelecimento
 	 */
-	public static final String[] ESTABELECIMENTO = { "1 - Meus dados", "2 - Minhas avaliações", "3 - Minhas compras",
-			"4 - Sair" };
-
+	public static final String[] ESTABELECIMENTO = { "1 - Dados", "2 - Avaliações", "3 - Compras", "4 - Funcionarios", "5 - Funções", "6 - Sair" };
+	public static final String[] FUNCOES = { "1 - Dados", "2 - Excluir", "3 - Sair" };
+	public static final String[] FUNCIONARIO = { "1 - Dados", "2 - Alterar função","3 - Avaliações",  "4 - Demitir", "5 - Sair" };
 	/**
 	 * Dados específicos de uma entidade passada
 	 * 

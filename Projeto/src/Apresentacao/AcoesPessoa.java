@@ -1,6 +1,6 @@
 package Apresentacao;
 import Controles.Validacoes;
-import Repositorio.Entidades.PessoaEntity;
+import Repositorio.Entidades.Pessoa;
 import Repositorio.Informacoes.PessoaInfo;
 import Utilidades.Globais;
 
@@ -8,9 +8,9 @@ import Utilidades.Globais;
  *
  * @author herli
  */
-public class Pessoa {
+public class AcoesPessoa {
 
-	public Pessoa() {
+	public AcoesPessoa() {
 		while (true) {
 			try {
 				String op = Painel.Opcao(Menu.PESSOA);
@@ -20,21 +20,18 @@ public class Pessoa {
 					break;
 				case "2":
 					// Avaliacoes();
-					Painel.Informar("Em Desenvolvimento");
+					AcoesAvaliacao.Feitas();
 					break;
 				case "3":
 					// Compras();
 					Painel.Informar("Em Desenvolvimento");
 					break;
 				case "4":
-					Estabelecimento.AcessarLista();
-					break;
-				case "5":
-					Painel.Informar("Em Desenvolvimento");
+					AcoesEstabelecimento.Listar();
 					break;
 				case "0":
-				case "6":
-					Globais.PessoaLogada = null;
+				case "5":
+					Globais.Pessoa = null;
 					return;
 				}
 			} catch (Exception e) {
@@ -53,16 +50,16 @@ public class Pessoa {
 				return;
 		}
 		if (Validacoes.AcessoPessoa(valores[campos[0]], valores[campos[1]]))
-			new Pessoa();
+			new AcoesPessoa();
 	}
 
 	public static void Cadastrar() throws Exception {
 		String[] pessoa = new String[] { "_______________", "_______________", "_______________", "_______________" };
 		int[] campos = { 0, 1, 2, 3 };
 		for (int i = 0; i < campos.length; i++) {
-			pessoa[i] = Painel.Entrada(Menu.TextoDadosEntidade(PessoaInfo.CAMPOS, pessoa, campos) + "\nDigite o valor para "
+			pessoa[campos[i]] = Painel.Entrada(Menu.TextoDadosEntidade(PessoaInfo.CAMPOS, pessoa, campos) + "\nDigite o valor para "
 					+ PessoaInfo.CAMPOS[campos[i]] + ": ");
-			if (pessoa[i] == null)
+			if (pessoa[campos[i]] == null)
 				return;
 		}
 		do {
@@ -75,10 +72,10 @@ public class Pessoa {
 	}
 
 	private static void Dados() throws Exception {
-		String[] pessoaInfoArray = PessoaInfo.GetInfoArray(Globais.PessoaLogada);
+		String[] pessoaInfoArray = PessoaInfo.GetInfoArray(Globais.Pessoa);
 		pessoaInfoArray = Acoes.VerAlterar(PessoaInfo.CAMPOS, pessoaInfoArray, PessoaInfo.CAMPOSVISIVEIS, PessoaInfo.CAMPOSEDITAVEIS);
-		PessoaEntity pessoaEntidade = PessoaInfo.GetEntity(pessoaInfoArray, PessoaInfo.GetArray(Globais.PessoaLogada));
+		Pessoa pessoaEntidade = PessoaInfo.GetEntity(pessoaInfoArray, PessoaInfo.GetArray(Globais.Pessoa));
 		Controles.PessoaControl.Atualizar(pessoaEntidade);
-		Globais.PessoaLogada = PessoaInfo.Copiar(pessoaEntidade);
+		Globais.Pessoa = PessoaInfo.Copiar(pessoaEntidade);
 	}
 }

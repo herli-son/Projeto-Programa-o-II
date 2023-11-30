@@ -68,4 +68,19 @@ public class Arquivo {
 		br.close();
 		return dados;
 	}
+	public static String[][] LerTodos(String path, int quantidadeCampos) throws FileNotFoundException, IOException {
+
+		String[][] dados = new String[0][quantidadeCampos];
+		
+		File dir = new File (path);
+		if (dir.isDirectory()) {
+			String s[] = dir.list();
+			dados = new String[s.length][quantidadeCampos];
+			for (int i = 0; i < s.length; i++) {
+				dados[i] = Ler(path + "//" + s[i], quantidadeCampos);
+			}
+		}
+		
+		return dados;
+	}
 }

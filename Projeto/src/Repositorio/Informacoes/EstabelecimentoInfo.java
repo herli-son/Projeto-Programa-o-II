@@ -1,6 +1,6 @@
 package Repositorio.Informacoes;
 
-import Repositorio.Entidades.EstabelecimentoEntity;
+import Repositorio.Entidades.Estabelecimento;
 
 public class EstabelecimentoInfo {
 	/**
@@ -34,7 +34,7 @@ public class EstabelecimentoInfo {
 	 * @param array
 	 * @return
 	 */
-	public static EstabelecimentoEntity GetEntity(String[] array) {
+	public static Estabelecimento GetEntity(String[] array) {
 		String[] info = { array[0], array[1], array[2], array[3], array[4], array[5]};
 		return GetEntity(info, array);
 	}
@@ -44,8 +44,8 @@ public class EstabelecimentoInfo {
 	 * @param array
 	 * @return
 	 */
-	public static EstabelecimentoEntity GetEntity(String[] info, String[] array) {
-		EstabelecimentoEntity estabelecimento = new EstabelecimentoEntity();
+	public static Estabelecimento GetEntity(String[] info, String[] array) {
+		Estabelecimento estabelecimento = new Estabelecimento();
 		
 		estabelecimento.id = info[0];
 		estabelecimento.nome = info[1];
@@ -60,16 +60,16 @@ public class EstabelecimentoInfo {
 			estabelecimento.servicos = "";
 			estabelecimento.produtos = "";
 			estabelecimento.funcionarios = "";
-			estabelecimento.servicosReservados = "";
-			estabelecimento.produtosReservados = "";
+			estabelecimento.reservas = "";
+			estabelecimento.compras = "";
 		} else {
 			estabelecimento.funcoes = array[6];
 			estabelecimento.avaliacoes = array[7];
 			estabelecimento.servicos = array[8];
 			estabelecimento.produtos = array[9];
 			estabelecimento.funcionarios = array[10];
-			estabelecimento.servicosReservados = array[11];
-			estabelecimento.produtosReservados = array[12];
+			estabelecimento.reservas = array[11];
+			estabelecimento.compras = array[12];
 		}
 		return estabelecimento;
 	}
@@ -79,18 +79,18 @@ public class EstabelecimentoInfo {
 	 * @param estabelecimento - estabelecimento que será convertido
 	 * @return Dados do estabelecimento em array
 	 */
-	public static String[] GetArray(EstabelecimentoEntity estabelecimento) {
+	public static String[] GetArray(Estabelecimento estabelecimento) {
 		return new String[] { estabelecimento.id, estabelecimento.nome, estabelecimento.cnpj, estabelecimento.descricao,
 				estabelecimento.abertura, estabelecimento.fechamento, estabelecimento.funcoes,
 				estabelecimento.avaliacoes, estabelecimento.servicos, estabelecimento.produtos,
-				estabelecimento.funcionarios, estabelecimento.servicosReservados, estabelecimento.produtosReservados };
+				estabelecimento.funcionarios, estabelecimento.reservas, estabelecimento.compras };
 	}
 	/**
 	 * 
 	 * @param estabelecimento
 	 * @return
 	 */
-	public static String[] GetInfoArray(EstabelecimentoEntity estabelecimento) {
+	public static String[] GetInfoArray(Estabelecimento estabelecimento) {
 		return new String[] { estabelecimento.id,  estabelecimento.nome, estabelecimento.cnpj, estabelecimento.descricao,
 				estabelecimento.abertura, estabelecimento.fechamento };
 	}
@@ -119,8 +119,8 @@ public class EstabelecimentoInfo {
 	 * @param estabelecimento
 	 * @return
 	 */
-	public static EstabelecimentoEntity Copiar(EstabelecimentoEntity estabelecimento){
-		EstabelecimentoEntity e = new EstabelecimentoEntity();
+	public static Estabelecimento Copiar(Estabelecimento estabelecimento){
+		Estabelecimento e = new Estabelecimento();
 		e.id = estabelecimento.id;
     	e.nome = estabelecimento.nome;
     	e.cnpj = estabelecimento.cnpj;
@@ -132,8 +132,19 @@ public class EstabelecimentoInfo {
     	e.servicos = estabelecimento.servicos;
     	e.produtos = estabelecimento.produtos;
     	e.funcionarios = estabelecimento.funcionarios;
-    	e.servicosReservados = estabelecimento.servicosReservados;
-    	e.produtosReservados = estabelecimento.produtosReservados;
+    	e.reservas = estabelecimento.reservas;
+    	e.compras = estabelecimento.compras;
     	return e;
     }
+	public static Estabelecimento[] AdicionarEstabelecimentoLista(Estabelecimento[] estabelecimentos, Estabelecimento estabelecimento) {
+		Estabelecimento[] aux = estabelecimentos;
+
+		estabelecimentos = new Estabelecimento[estabelecimentos.length + 1];
+	    int i;
+	    for (i = 0; i < aux.length; i++) {
+	    	estabelecimentos[i] = aux[i];
+	    }
+	    estabelecimentos[i] = estabelecimento;
+	    return estabelecimentos;
+	}
 }

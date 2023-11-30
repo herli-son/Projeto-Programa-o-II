@@ -16,10 +16,10 @@ public class Acoes {
 				String op = Painel.Opcao(Menu.INICIO);
 				switch (op) {
 				case "1":
-					Pessoa.Acessar();
+					AcoesPessoa.Acessar();
 					break;
 				case "2":
-					Pessoa.Cadastrar();
+					AcoesPessoa.Cadastrar();
 					break;
 				case "0":
 				case "3":
@@ -108,7 +108,7 @@ public class Acoes {
 	 */
 	public static String[] VerAlterar(String[] infoEntidade, String[] dados, int[] camposVer, int[] camposAlterar)
 			throws Exception {
-		while (Painel.SimOuNao(Menu.TextoDadosEntidade(infoEntidade, dados, camposVer)))
+		while (Painel.SimOuNao(Menu.TextoDadosEntidade(infoEntidade, dados, camposVer) + "\nDeseja alterar alguma informação?"))
 			dados = Atualizar(infoEntidade, dados, camposAlterar);
 		return dados;
 	}
@@ -139,45 +139,17 @@ public class Acoes {
 	 * @throws Exception O campo não existe no array <br>
 	 *                   Os dados não tem quantidade de campos correspondente a info
 	 */
-	public static void VerLista(String[] infoEntidade, String[][] dados, int[] campos, int[] camposIdentificar)
+	public static int EscolherLista(String[][] dados, int[] camposIdentificar, String obj )
 			throws Exception {
-		int index, opcao;
+		int index;
 		String[] itens = new String[dados.length];
 		for (int i = 0; i < dados.length; i++) {
 			itens[i] = Array.ConcatenarCampos(dados[i], camposIdentificar);
 		}
-		do {
-			index = Painel.EscolherDadoLista(itens);
-			if (index == -1)
-				return;
-			do {
-				opcao = Painel.VerDadoLista(Menu.TextoDadosEntidade(infoEntidade, dados[index], campos));
-				switch (opcao) {
-				case 0:
-					index = Globais.Proximo(index, dados.length);
-					break;
-				case 2:
-					index = Globais.Anterior(index);
-					break;
-				}
-			} while (opcao != 1 && opcao != -1);
-		} while (true);
-	}
 
-	/**
-	 * Ver campos específicos de um conjunto de uma mesma entidade
-	 * 
-	 * @param infoEntidade  - Info da entidade que será visualizada
-	 * @param dados         - Lista de entidade
-	 * @param camposMostrar - Campo para identificar um item da lista
-	 * @throws Exception O campo não existe no array <br>
-	 *                   Os dados não tem quantidade de campos correspondente a info
-	 */
-	public static void VerLista(String[] infoEntidade, String[][] dados, int[] camposIdentificar) throws Exception {
-		int[] campos = new int[infoEntidade.length];
-		for (int i = 0; i < campos.length; i++)
-			campos[i] = i;
-		VerLista(infoEntidade, dados, campos, camposIdentificar);
+		index = Painel.EscolherDadoLista(itens, obj);
+		return index;
+		
 	}
 
 	/**
@@ -186,11 +158,26 @@ public class Acoes {
 	 * @param dados
 	 * @throws Exception
 	 */
-	public static void VerLista(String[] infoEntidade, String[][] dados) throws Exception {
-		int[] campos = new int[infoEntidade.length];
+	public static int EscolherLista(String[][] dados, String obj) throws Exception {
+		int[] campos = new int[dados.length];
 		for (int i = 0; i < campos.length; i++)
 			campos[i] = i;
-		VerLista(infoEntidade, dados, campos, new int[] { 0 });
+		return EscolherLista(dados, campos, obj);
+	}
+	
+	public static void VerLista(String[] infoEntidade, String[][] dados, int[] campos, int index) throws Exception {
+		int opcao;
+		do {
+			opcao = Painel.VerDadoLista(Menu.TextoDadosEntidade(infoEntidade, dados[index], campos));
+			switch (opcao) {
+			case 0:
+				index = Globais.Anterior(index);
+				break;
+			case 2:
+				index = Globais.Proximo(index, dados.length);
+				break;
+			}
+		} while (opcao != 1 && opcao != -1);
 	}
 
 	/**
@@ -311,13 +298,14 @@ public class Acoes {
 		return VerAlterarCancelar(infoEntidade, dados, campos, campos);
 	}
 
-	public static int ManutencaoLista(String[] infoEntidade, String[][] dados, int[] campos, int[] camposIdentificar)
+	public static int ManutencaoLista(String[] infoEntidade, String[][] dados, int[] campos, int[] camposIdentificar, String obj)
 			throws Exception {
 		int index;
 		String[] itens;
 		itens = Array.ConcatenarListaCampos(dados, camposIdentificar);
 		do {
-			index = Painel.EscolherAdicionarDadoLista(itens);
+				index = Painel.EscolherAdicionarDadoLista(itens, obj);
+			
 			if (index < 1)
 				return index;
 			else {
