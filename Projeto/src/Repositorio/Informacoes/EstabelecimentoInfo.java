@@ -114,6 +114,17 @@ public class EstabelecimentoInfo {
 		return infos;
 		
 	}
+	public static String[][] GetListInfoArray(Estabelecimento[] estabelecimentos) {
+		
+		String[][] infos = new String[estabelecimentos.length][CAMPOS.length];
+		
+		for (int i = 0; i < infos.length; i++) {
+			infos[i] = GetInfoArray(estabelecimentos[i]);
+		}
+		
+		return infos;
+		
+	}
 	/**
 	 * 
 	 * @param estabelecimento

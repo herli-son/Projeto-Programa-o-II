@@ -4,13 +4,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import Controles.AvaliacaoControl;
+import Controles.EstabelecimentoControl;
 import Controles.FuncionarioControl;
 import Controles.PessoaControl;
 import Controles.Validacoes;
 import Repositorio.Entidades.Avaliacao;
+import Repositorio.Entidades.Estabelecimento;
 import Repositorio.Entidades.Funcionario;
 import Repositorio.Entidades.Pessoa;
 import Repositorio.Informacoes.AvaliacaoInfo;
+import Repositorio.Informacoes.EstabelecimentoInfo;
 import Repositorio.Informacoes.FuncionarioInfo;
 import Utilidades.Array;
 import Utilidades.Globais;
@@ -18,6 +21,7 @@ import Utilidades.Globais;
 public class AcoesAvaliacao {
 	public AcoesAvaliacao() {
 		while (true) {
+			Globais.Titulo = "Avaliação";
 			try {
 				String op = Painel.Opcao(Menu.AVALIACAO);
 				switch (op) {
@@ -47,6 +51,7 @@ public class AcoesAvaliacao {
 
 	public static void Feitas() throws Exception {
 		while (true) {
+			Globais.Titulo = "Avaliações feitas pela pessoa";
 			String[][] avaliacoes = BuscarAvaliacoes();
 			int escolhido = Acoes.ManutencaoLista(AvaliacaoInfo.CAMPOS, AvaliacaoInfo.GetListInfoArray(avaliacoes),
 					AvaliacaoInfo.CAMPOSVISIVEIS, AvaliacaoInfo.CAMPOSIDENTIFICAR, "Avaliações");
@@ -67,12 +72,22 @@ public class AcoesAvaliacao {
 	public static void Recebidas(String tipo, String avaliado) throws Exception {
 
 		String[][] dados = new String[0][0];
-
+		Avaliacao[] avaliacoes;
+		String[] ava;
+		Globais.Titulo = "Avaliações recebidas pelo " + tipo;
 		switch (tipo) {
 		case "Funcionário":
-			Avaliacao[] avaliacoes;
 			Funcionario func = FuncionarioControl.Ler(avaliado);
-			String[] ava = Array.Lista(func.avaliacoes);
+			ava = Array.Lista(func.avaliacoes);
+			avaliacoes = new Avaliacao[ava.length];
+			for (int i = 0; i < ava.length; i++) {
+				avaliacoes[i] = AvaliacaoControl.Ler(ava[i]);
+			}
+			dados = AvaliacaoInfo.GetListInfoArray(avaliacoes);
+			break;
+		case "Estabelecimento":
+			Estabelecimento estab = EstabelecimentoControl.Ler(avaliado);
+			ava = Array.Lista(estab.avaliacoes);
 			avaliacoes = new Avaliacao[ava.length];
 			for (int i = 0; i < ava.length; i++) {
 				avaliacoes[i] = AvaliacaoControl.Ler(ava[i]);
@@ -109,12 +124,20 @@ public class AcoesAvaliacao {
 				Pessoa pess = PessoaControl.Ler(func.pessoa);
 				avaliacoes[i][1] += " - " + pess.nome + " " + pess.sobrenome;
 				break;
+			case "Estabelecimento":
+				
+				Estabelecimento estab = EstabelecimentoControl.Ler(avaliacoes[i][1]);
+				avaliacoes[i][1] += " - " + estab.nome;
+				
+				break;
 			}
+				
 		}
 		return avaliacoes;
 	}
 
 	private static void Cadastrar() throws Exception {
+		Globais.Titulo = "Cadastro de avaliação";
 		String op = Painel.Opcao(Menu.AVALIACOES);
 		if (op.equals("0") || op.equals("5"))
 			return;
@@ -123,18 +146,27 @@ public class AcoesAvaliacao {
 
 		String[] avaliacao = new String[] { "", "_______________", op, "_______________", "_______________" };
 		int[] campos = AvaliacaoInfo.CAMPOSEDITAVEIS;
-
 		do {
-
+			int escolhido;
 			switch (op) {
 			case "Funcionário":
 
 				Funcionario[] funcionarios = FuncionarioControl.LerTodos();
-				int escolhido = Acoes.EscolherLista(FuncionarioInfo.GetListInfoArray(funcionarios),
+				escolhido = Acoes.EscolherLista(FuncionarioInfo.GetListInfoArray(funcionarios),
 						FuncionarioInfo.CAMPOSVISIVEIS, "Funcionário");
 				if (escolhido == -1)
 					return;
 				avaliacao[1] = funcionarios[escolhido].id;
+				break;
+			case "Estabelecimento":
+				
+				Estabelecimento[] estabelecimento = EstabelecimentoControl.LerTodos();
+				escolhido = Acoes.EscolherLista(EstabelecimentoInfo.GetListInfoArray(estabelecimento),
+						EstabelecimentoInfo.CAMPOSVISIVEIS, "Estabelecimento");
+				if (escolhido == -1)
+					return;
+				avaliacao[1] = estabelecimento[escolhido].id;
+				
 				break;
 			}
 		} while (!Validacoes.PodeAvaliar(AvaliacaoInfo.GetEntity(avaliacao)));

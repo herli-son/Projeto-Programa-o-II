@@ -1,8 +1,6 @@
 package Repositorio.Informacoes;
 
 import Repositorio.Entidades.Avaliacao;
-import Repositorio.Entidades.Funcionario;
-import Repositorio.Entidades.Pessoa;
 
 public class AvaliacaoInfo {
 	public static final String[] CAMPOS = { "ID", "Avaliado", "Tipo",  "Comentário", "Nota"};

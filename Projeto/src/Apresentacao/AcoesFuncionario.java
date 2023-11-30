@@ -21,6 +21,7 @@ public class AcoesFuncionario {
 	
 	public AcoesFuncionario()  {
 		while (true) {
+			Globais.Titulo = "Funcionário";
 			try {
 				String op = Painel.Opcao(Menu.FUNCIONARIO);
 				switch (op) {
@@ -61,7 +62,6 @@ public class AcoesFuncionario {
 	}
 	
 	public static void Listar() throws Exception{
-		
 		if(Validacoes.EFuncionario())
 			Manutencao();
 		else
@@ -70,6 +70,7 @@ public class AcoesFuncionario {
 	private static void Ver() throws Exception {
 		
 		do {
+			Globais.Titulo = "Funcionários do estabelecimento";
 			String[][] funcionarios = FuncionarioInfo.GetListInfoArray(BuscarFuncionarios());
 			int escolhido = Acoes.EscolherLista(funcionarios, FuncionarioInfo.CAMPOSVISIVEIS, "Funcionario");
 			if(escolhido == -1) return;
@@ -78,6 +79,7 @@ public class AcoesFuncionario {
 	}
 	private static void Manutencao() throws Exception {
 		do {
+			Globais.Titulo = "Funcionários do estabelecimento";
 			String[][] funcionarios = BuscarFuncionarios();
  			int escolhido = Acoes.ManutencaoLista(FuncionarioInfo.CAMPOS, FuncionarioInfo.GetListInfoArray(funcionarios), FuncionarioInfo.CAMPOSVISIVEIS, FuncionarioInfo.CAMPOSVISIVEIS, "Funcionário");
 			
@@ -95,6 +97,7 @@ public class AcoesFuncionario {
 	}
 
 	private static void Cadastrar(String[][] funcionarios) throws Exception {
+		Globais.Titulo = "Contratação de funcionário";
 		String[] nomeFuncionario = new String[funcionarios.length];
 		String[] f = Array.Lista(Globais.Estabelecimento.funcoes);
 		Funcao[] funcoes = new Funcao[f.length];
@@ -142,6 +145,7 @@ public class AcoesFuncionario {
 		Acoes.Ver(Array.Concatena(PessoaInfo.CAMPOS, FuncaoInfo.CAMPOS), Array.Concatena(pessoa, funcao), new int[] {0, 1, 2, 5, 6});
 	}
 	private static void Alterar() throws Exception {
+		Globais.Titulo = "Atualização de funcionário";
 		String[] f = Array.Lista(Globais.Estabelecimento.funcoes);
 		Funcao[] funcoes = new Funcao[f.length];
 		for (int i = 0; i < f.length; i++) {

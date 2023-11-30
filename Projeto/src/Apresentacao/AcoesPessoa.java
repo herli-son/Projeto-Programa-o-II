@@ -12,6 +12,7 @@ public class AcoesPessoa {
 
 	public AcoesPessoa() {
 		while (true) {
+			Globais.Titulo = "Pessoa";
 			try {
 				String op = Painel.Opcao(Menu.PESSOA);
 				switch (op) {
@@ -41,6 +42,7 @@ public class AcoesPessoa {
 	}
 
 	public static void Acessar() throws Exception {
+		Globais.Titulo = "Acesso de Pessoa";
 		String[] valores = { "", "", "_______________", "_______________" };
 		int[] campos = PessoaInfo.CAMPOSACESSO;
 		for (int i = 0; i < campos.length; i++) {
@@ -54,6 +56,7 @@ public class AcoesPessoa {
 	}
 
 	public static void Cadastrar() throws Exception {
+		Globais.Titulo = "Cadastro de Pessoa";
 		String[] pessoa = new String[] { "_______________", "_______________", "_______________", "_______________" };
 		int[] campos = { 0, 1, 2, 3 };
 		for (int i = 0; i < campos.length; i++) {
@@ -72,6 +75,7 @@ public class AcoesPessoa {
 	}
 
 	private static void Dados() throws Exception {
+		Globais.Titulo = "Dados da Pessoa";
 		String[] pessoaInfoArray = PessoaInfo.GetInfoArray(Globais.Pessoa);
 		pessoaInfoArray = Acoes.VerAlterar(PessoaInfo.CAMPOS, pessoaInfoArray, PessoaInfo.CAMPOSVISIVEIS, PessoaInfo.CAMPOSEDITAVEIS);
 		Pessoa pessoaEntidade = PessoaInfo.GetEntity(pessoaInfoArray, PessoaInfo.GetArray(Globais.Pessoa));

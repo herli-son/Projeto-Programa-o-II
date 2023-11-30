@@ -19,6 +19,7 @@ public class Globais {
     public static Funcionario Funcionario;
     public static Funcao Funcao;
     public static Avaliacao Avaliacao;
+    public static String Titulo;
     /**
     * Caracteres válidos para cadastrar
     */

@@ -11,6 +11,7 @@ public class Acoes {
 	public static void Acesso() {
 		boolean encerrar = false;
 		while (!encerrar) {
+			Globais.Titulo = "Inicio";
 			try {
 
 				String op = Painel.Opcao(Menu.INICIO);

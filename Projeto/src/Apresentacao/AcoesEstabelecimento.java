@@ -13,6 +13,7 @@ public class AcoesEstabelecimento {
 
 	public AcoesEstabelecimento() {
 		while (true) {
+			Globais.Titulo = "Estabelecimento";
 			try {
 				String op = Painel.Opcao(Menu.ESTABELECIMENTO);
 				switch (op) {
@@ -21,7 +22,7 @@ public class AcoesEstabelecimento {
 					break;
 				case "2":
 					// Avaliaçoes
-					Painel.Informar("Em desenvolvimento");
+					AcoesAvaliacao.Recebidas("Estabelecimento", Globais.Estabelecimento.id);
 					break;
 				case "3":
 					// Minhas Compras
@@ -48,6 +49,7 @@ public class AcoesEstabelecimento {
 	}
 
 	public static String Cadastrar() throws Exception {
+		Globais.Titulo = "Cadastro de estabelecimento";
 		String[] estabelecimento = new String[] { "", "_______________", "_______________", "_______________",
 				"_______________", "_______________" };
 		int[] campos = { 1, 2, 3, 4, 5 };
@@ -69,6 +71,7 @@ public class AcoesEstabelecimento {
 	}
 
 	private static void Dados() throws Exception {
+		Globais.Titulo = "Dados do estabelecimento";
 		String[] estabelecimentoArray = EstabelecimentoInfo.GetInfoArray(Globais.Estabelecimento);
 
 		if (Validacoes.EFuncionario()) {
@@ -86,6 +89,7 @@ public class AcoesEstabelecimento {
 	public static void Listar() throws Exception {
 
 		do {
+			Globais.Titulo = "Lista de estabelecimentos do sistema";
 			String[][] estabelecimentos = BuscarEstabelecimentos();
 			int escolhido = Acoes.ManutencaoLista(EstabelecimentoInfo.CAMPOS,
 					EstabelecimentoInfo.GetListInfoArray(estabelecimentos), EstabelecimentoInfo.CAMPOSVISIVEIS,

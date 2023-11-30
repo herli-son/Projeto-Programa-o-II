@@ -14,6 +14,7 @@ import Utilidades.Globais;
 public class AcoesFuncao {
 	public AcoesFuncao() {
 		while (true) {
+			Globais.Titulo = "Função";
 			try {
 				String op = Painel.Opcao(Menu.FUNCOES);
 				switch (op) {
@@ -53,6 +54,7 @@ public class AcoesFuncao {
 	private static void Ver() throws Exception {
 
 		do {
+			Globais.Titulo = "Lista de funções";
 			String[][] funcoes = BuscarFuncoes();
 			int escolhido = Acoes.EscolherLista(funcoes, FuncaoInfo.CAMPOSVISIVEIS, "Funções");
 			if (escolhido == -1)
@@ -64,6 +66,7 @@ public class AcoesFuncao {
 	public static void Manutencao() throws Exception {
 
 		do {
+			Globais.Titulo = "Lista de funções";
 			String[][] funcoes = BuscarFuncoes();
 			int escolhido = Acoes.ManutencaoLista(FuncaoInfo.CAMPOS, FuncaoInfo.GetListInfoArray(funcoes),
 					FuncaoInfo.CAMPOSVISIVEIS, FuncaoInfo.CAMPOSIDENTIFICAR, "Função");
@@ -82,6 +85,7 @@ public class AcoesFuncao {
 	}
 
 	private static void Cadastrar() throws Exception {
+		Globais.Titulo = "Cadastro de função";
 		String[] funcao = new String[] { "", "_______________", "_______________", Globais.Estabelecimento.id };
 		int[] campos = FuncaoInfo.CAMPOSEDITAVEIS;
 		for (int i = 0; i < campos.length; i++) {
@@ -112,6 +116,7 @@ public class AcoesFuncao {
 	}
 
 	private static void Dados() throws Exception {
+		Globais.Titulo = "Informação da função";
 		String[] funcaoInfoArray = FuncaoInfo.GetArray(Globais.Funcao);
 		if (Validacoes.EFuncionario()) {
 			funcaoInfoArray = Acoes.VerAlterar(FuncaoInfo.CAMPOS, funcaoInfoArray, FuncaoInfo.CAMPOSVISIVEIS,

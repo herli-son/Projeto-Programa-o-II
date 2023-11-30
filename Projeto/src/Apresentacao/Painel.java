@@ -5,6 +5,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+import Utilidades.Globais;
+
 /**
  *
  * @author herli
@@ -19,7 +21,7 @@ public class Painel {
 	 *         <b>False</b> - Selecionou não
 	 */
 	public static boolean SimOuNao(String mensagem) {
-		int op = JOptionPane.showConfirmDialog(null, mensagem, "Visualização de dados", JOptionPane.YES_NO_OPTION,
+		int op = JOptionPane.showConfirmDialog(null, mensagem, Globais.Titulo, JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 		return op == JOptionPane.YES_OPTION;
 	}
@@ -34,7 +36,7 @@ public class Painel {
 	 *         2 - Cancelar
 	 */
 	public static int SimOuNaoOuCancelar(String mensagem) {
-		return JOptionPane.showConfirmDialog(null, mensagem, "Visualização de dados", JOptionPane.YES_NO_CANCEL_OPTION,
+		return JOptionPane.showConfirmDialog(null, mensagem, Globais.Titulo, JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 	}
 
@@ -45,7 +47,7 @@ public class Painel {
 	 * @return Dado informado
 	 */
 	public static String Entrada(String mensagem) {
-		return JOptionPane.showInputDialog(null, mensagem, "Informe.", JOptionPane.PLAIN_MESSAGE);
+		return JOptionPane.showInputDialog(null, mensagem, Globais.Titulo, JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**
@@ -58,7 +60,7 @@ public class Painel {
 		JList<Object> lista = new JList<Object>(opcoes);
 		lista.setBackground((Color) UIManager.get("OptionPane.background"));
 		lista.setSelectedIndex(0);
-		JOptionPane.showMessageDialog(null, lista, "Selecione:", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, lista, Globais.Titulo, JOptionPane.PLAIN_MESSAGE);
 		return String.valueOf(lista.getSelectedIndex() + 1);
 	}
 
@@ -91,7 +93,7 @@ public class Painel {
 	 */
 	public static int VerDadoLista(String informacao) {
 		Object[] options = { "Anterior", "Sair", "Próximo" };
-		return JOptionPane.showOptionDialog(null, informacao, "Exibindo dado de uma lista.", JOptionPane.DEFAULT_OPTION,
+		return JOptionPane.showOptionDialog(null, informacao, Globais.Titulo, JOptionPane.DEFAULT_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 	}
 
@@ -108,7 +110,7 @@ public class Painel {
 	 */
 	public static int AcessarDadoLista(String informacao) {
 		Object[] options = { "Anterior", "Acessar", "Sair", "Próximo" };
-		return JOptionPane.showOptionDialog(null, informacao, "Manutenção de lista.", JOptionPane.DEFAULT_OPTION,
+		return JOptionPane.showOptionDialog(null, informacao, Globais.Titulo, JOptionPane.DEFAULT_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 	}
 
@@ -122,7 +124,7 @@ public class Painel {
 	public static int EscolherDadoLista(String[] opcao, String obj) {
 
 		int index = 0;
-		Object escolhido = JOptionPane.showInputDialog(null, "Selecione: " + obj, "Lista",
+		Object escolhido = JOptionPane.showInputDialog(null, "Selecione: " + obj, Globais.Titulo,
 				JOptionPane.PLAIN_MESSAGE, null, opcao, opcao[0]);
 		if(escolhido == null)
 			return -1;
@@ -147,7 +149,7 @@ public class Painel {
 
 		int index = 0;
 		String[] opcao = Utilidades.Array.Concatena(new String[] { "Adicionar" }, dados);
-		Object escolhido = JOptionPane.showInputDialog(null, "Selecione para visualizar: " + obj, "Lista",
+		Object escolhido = JOptionPane.showInputDialog(null, "Selecione para visualizar: " + obj, Globais.Titulo,
 				JOptionPane.PLAIN_MESSAGE, null, opcao, opcao[0]);
 		
 		if(escolhido == null)
